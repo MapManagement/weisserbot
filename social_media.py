@@ -2,13 +2,6 @@ from twitchio.ext import commands
 import command_editor
 
 
-def create_command(name: str, content: str):
-    blueprint = f'    @commands.command(name="{name}")\n    async def {name}(self, ctx):\n' \
-                f'        await ctx.send("{content}")\n' \
-                f'\n'
-    return blueprint
-
-
 @commands.cog()
 class SocialMedia:
 
