@@ -83,11 +83,11 @@ class CommandEditor:
 
     @commands.command(name="new_cmd")
     async def new_command(self, ctx, name: str, *, content: str):
-        if await checks.is_mod(ctx):
-            result = create_command(name, content)
-            self.bot.unload_module("custom_commands")
-            self.bot.load_module("custom_commands")
-            await ctx.send(result[0])
+
+        result = create_command(name, content)
+        self.bot.unload_module("custom_commands")
+        self.bot.load_module("custom_commands")
+        await ctx.send(result)
 
     @commands.command(name="del_cmd")
     async def delete_command(self, ctx, name: str):
@@ -95,7 +95,7 @@ class CommandEditor:
             result = delete_command(name)
             self.bot.unload_module(result[1])
             self.bot.load_module(result[1])
-            await ctx.send(result[0])
+            await ctx.send(result)
 
     @commands.command(name="edit_cmd")
     async def update_command(self, ctx, name: str, *, content: str):
