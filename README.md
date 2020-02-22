@@ -9,13 +9,13 @@ to report a bug, just message [Mapman](https://twitter.com/MapManagement) or
 HowTo
 -------
     Add command
-    !new_command <command_name> <command_content>
+    !new_cmd <command_name> <command_content>
     
     Edit command
-    !update_command <command_name> <command_content>
+    !edit_cmd <command_name> <command_content>
     
     Delete command
-    !delete_command <command_name>
+    !del_cmd <command_name>
 
 Future
 ------
