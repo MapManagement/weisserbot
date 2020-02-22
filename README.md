@@ -1,6 +1,6 @@
 Bot
 ---
-TwitchBot written with TwitchIO in Python.
+TwitchBot written in Python using [TwitchIO](https://github.com/TwitchIO/TwitchIO).
 Only [Weissemoehre](https://www.twitch.tv/weissemoehre) is allowed to use this bot on his Twitch channel.
 Further implementations are planned and listed at the "Future" section. If you also have ideas or want
 to report a bug, just message [Mapman](https://twitter.com/MapManagement) or
