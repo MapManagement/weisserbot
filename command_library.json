@@ -1,0 +1,212 @@
+{
+    "commands": {
+        "facecam": {
+            "content": "M\u00c3\u00b6hre hat keine Lust auf Facecam und streamt deshalb ohne.",
+            "pyfile": "gear"
+        },
+        "hardware": {
+            "content": "Hardware: https://docs.google.com/spreadsheets/d/11DZiLLIWtCsgYxtM4d74fLWok8G2rqbNwyKgYFUdJZE/edit?usp=sharing",
+            "pyfile": "gear"
+        },
+        "leitung": {
+            "content": "100MBit/s",
+            "pyfile": "gear"
+        },
+        "keyboard": {
+            "content": "Steelseries Apex Pro TKL",
+            "pyfile": "gear"
+        },
+        "maus": {
+            "content": "G-Pro Wireless",
+            "pyfile": "gear"
+        },
+        "mousepad": {
+            "content": "https://shop.x-raypad.com/shop/thor-fast-speed-cloth-mouse-pad/",
+            "pyfile": "gear"
+        },
+        "mic": {
+            "content": "Shure SM7B",
+            "pyfile": "gear"
+        },
+        "monitor": {
+            "content": "Dell Alienware AW2518H @240Hz",
+            "pyfile": "gear"
+        },
+        "setup": {
+            "content": "Setup: https://docs.google.com/spreadsheets/d/11DZiLLIWtCsgYxtM4d74fLWok8G2rqbNwyKgYFUdJZE/edit?usp=sharing",
+            "pyfile": "gear"
+        },
+        "brightness": {
+            "content": "50%",
+            "pyfile": "software"
+        },
+        "colorblind": {
+            "content": "Protanope/Rotblindheit 10 (bessere Sturmsicht und sch\u00c3\u00b6nere Farben)",
+            "pyfile": "software"
+        },
+        "dx12": {
+            "content": "DX12 oder DirectX12 ist eine von Microsoft entwickelte Grafik API und dient haupts\u00c3\u00a4chlich zur Programmierung von Spielen. Im Gegensatz zu DX11 erbringt sie h\u00c3\u00b6here und stabilere Frames und bessere Lastverteilung auf die CPU Kerne.",
+            "pyfile": "software"
+        },
+        "res": {
+            "content": "Native",
+            "pyfile": "software"
+        },
+        "sens": {
+            "content": "400 DPI | X 0.14 Y 0.13 | Scope and ADS 0.655",
+            "pyfile": "software"
+        },
+        "settings": {
+            "content": "Moehres Settings: https://clips.twitch.tv/FamousPhilanthropicClipzAsianGlow",
+            "pyfile": "software"
+        },
+        "age": {
+            "content": "17",
+            "pyfile": "rl_information"
+        },
+        "beruf": {
+            "content": "Moehre geht noch zur Schule. Momentan ist er in der 11. Klasse auf einem Gymnasium.",
+            "pyfile": "rl_information"
+        },
+        "face": {
+            "content": "Hier ist ein Clip von Moehre: https://clips.twitch.tv/AlertEmpathicStapleAMPEnergy",
+            "pyfile": "rl_information"
+        },
+        "herkunft": {
+            "content": "Sachsen",
+            "pyfile": "rl_information"
+        },
+        "name": {
+            "content": "Er und seine Gro\u00c3\u0178mutter nannten Kohlrabi WeisseMoehre und da er 2012 einen Gamertag brauchte, haben seine Eltern diesen vorgeschlagen.",
+            "pyfile": "rl_information"
+        },
+        "org": {
+            "content": "Moehre ist aktuell in keiner Org und auch in keinem Clan!",
+            "pyfile": "rl_information"
+        },
+        "schule": {
+            "content": "Moehre geht in die 11. Klasse eines Gymnasiums.",
+            "pyfile": "rl_information"
+        },
+        "arena": {
+            "content": "Moehre spielt kein Arena auf seinem Main Account, da er so viele Punkte hat, dass die Queue zu lange dauert.",
+            "pyfile": "viewer_info"
+        },
+        "auszahlung": {
+            "content": "Sofern ihr etwas in einem der Turniere gewonnen habt, wartet auf eine Mail von Epic oder besucht folgende Webseite: https://www.epicgames.com/competitive/prizes",
+            "pyfile": "viewer_info"
+        },
+        "bttv": {
+            "content": "Wenn ihr Emotes wie FeelsBadMan , pepeJAM und Pog nicht sehen k\u00c3\u00b6nnt, liegt es daran das ihr BTTV nicht aktiviert habt.",
+            "pyfile": "viewer_info"
+        },
+        "caps": {
+            "content": "Bitte nicht in CAPS schreiben!",
+            "pyfile": "viewer_info"
+        },
+        "donate": {
+            "content": "Der Donationlink: https://www.tipeeestream.com/weissemoehre/donation",
+            "pyfile": "viewer_info"
+        },
+        "donation": {
+            "content": "Ihr k\u00c3\u00b6nnt mich gerne mit einem kleinen Betrag unterst\u00c3\u00bctzen, jedoch ist das keine Pflicht! https://www.tipeeestream.com/weissemoehre/donation",
+            "pyfile": "viewer_info"
+        },
+        "duo_mate": {
+            "content": "Mein aktueller Duo Mate: Kullie",
+            "pyfile": "viewer_info"
+        },
+        "earnings": {
+            "content": "Aktuell 8360$",
+            "pyfile": "viewer_info"
+        },
+        "friendlist": {
+            "content": "Moehre nimmt Freundschaftsanfragen nur an, wenn er Rotations hostet oder Viewer 1v1's macht. Fragt sonst bitte nicht nach, ob er eure Fa's annehmen kann.",
+            "pyfile": "viewer_info"
+        },
+        "info": {
+            "content": "Moehre ist KEINE INFOSTELLE f\u00c3\u00bcr Fragen wie: Wann streamt XYZ? Bitte unterlasst das Fragen.",
+            "pyfile": "viewer_info"
+        },
+        "mitmachen": {
+            "content": "Wenn ihr bei Zonewars mitmachen m\u00c3\u00b6chtet, m\u00c3\u00bcsst ihr warten bis die Runde vorbei ist und danach einfach nur den Custom Key eingeben.",
+            "pyfile": "viewer_info"
+        },
+        "moehren": {
+            "content": "So kriegt ihr Moehren | Watch for 5 minutes* +10 | Claim special bonuses* +50 | Participate in a Raid +250 | Follow this channel +300 | Monthly 1st Cheer +350 | Monthly 1st Gift a Sub +500 Gro |with a watch streak up to +450 |",
+            "pyfile": "viewer_info"
+        },
+        "prime": {
+            "content": "Mit Amazon Prime kannst du Moehre kostenlos abonnieren.",
+            "pyfile": "viewer_info"
+        },
+        "shop": {
+            "content": "Shop: https://fnbr.co/shop",
+            "pyfile": "viewer_info"
+        },
+        "spam": {
+            "content": "Bitte wiederhole nicht mehrmals die gleiche Nachricht im Chat.",
+            "pyfile": "viewer_info"
+        },
+        "spielersuche": {
+            "content": "Bitte fragt hier nicht nach Mates zum Spielen, nutzt daf\u00c3\u00bcr bitte den Discord: https://discord.gg/Zjwmetf",
+            "pyfile": "viewer_info"
+        },
+        "sub": {
+            "content": "Sub: https://www.twitch.tv/products/weissemoehre",
+            "pyfile": "viewer_info"
+        },
+        "subgifts": {
+            "content": "Die Person, die Subs verschenkt, entscheidet selber, wie viele Subs verschenkt werden und wer einen Sub bekommt. Wer danach fragt, bekommt einen Timeout. Bitte habt Verst\u00c3\u00a4ndnis.",
+            "pyfile": "viewer_info"
+        },
+        "vip": {
+            "content": "VIP sollten Personen sein, welche eine Bedeutung f\u00c3\u00bcr mich au\u00c3\u0178erhalb des Streams oder etwas Bedeutendes f\u00c3\u00bcr mich getan haben.",
+            "pyfile": "viewer_info"
+        },
+        "\u00c3\u00bcberlesen": {
+            "content": "Falls Moehre eure Nachrichten nicht lesen sollte, macht er das nicht mit Absicht oder aus Bosheit, sondern weil er gerade besch\u00c3\u00a4ftigt ist. Nehmt ihm das bitte nicht \u00c3\u00bcbel. Er kann nicht auf alle achten.",
+            "pyfile": "viewer_info"
+        },
+        "twitter": {
+            "content": "Twitter: https://twitter.com/WeisseMoehre",
+            "pyfile": "social_media"
+        },
+        "discord": {
+            "content": "Discord: https://discord.gg/CDCVy7H",
+            "pyfile": "social_media"
+        },
+        "epic": {
+            "content": "Mein Epic Nickname: WeisseMoehre",
+            "pyfile": "social_media"
+        },
+        "insta": {
+            "content": "Insta: https://www.instagram.com/weissemoehre/?hl=de",
+            "pyfile": "social_media"
+        },
+        "youtube": {
+            "content": "Youtube: https://www.youtube.com/channel/UCXxveuOMQpF3rruu3p18yHQ",
+            "pyfile": "social_media"
+        },
+        "playlist": {
+            "content": "Playlist: https://open.spotify.com/playlist/0vvXsWCC9xrXsKd4FyS8kM?si=jL2z9CdYTbShfFY45Ys_tw",
+            "pyfile": "social_media"
+        },
+        "cc": {
+            "content": "Use code 'Moehre' in the item shop #ad",
+            "pyfile": "viewer_info"
+        },
+        "chatstats": {
+            "content": "https://stats.streamelements.com/c/weissemoehre" ,
+            "pyfile": "social_media"
+        },
+        "coc": {
+            "content": "Der Community Clan von WeisseMoehre ist im Moment nicht voll. Der Hashtag zu seinem Clan lautet: #2PQR99GOR." ,
+            "pyfile": "social_media"
+        },
+        "commands": {
+            "content": "Derzeit noch in Bearbeitung!" ,
+            "pyfile": "viewer_info"
+        }
+    }
+}
