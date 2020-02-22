@@ -197,15 +197,15 @@
             "pyfile": "viewer_info"
         },
         "chatstats": {
-            "content": "https://stats.streamelements.com/c/weissemoehre" ,
+            "content": "https://stats.streamelements.com/c/weissemoehre",
             "pyfile": "social_media"
         },
         "coc": {
-            "content": "Der Community Clan von WeisseMoehre ist im Moment nicht voll. Der Hashtag zu seinem Clan lautet: #2PQR99GOR." ,
+            "content": "Der Community Clan von WeisseMoehre ist im Moment nicht voll. Der Hashtag zu seinem Clan lautet: #2PQR99GOR.",
             "pyfile": "social_media"
         },
         "commands": {
-            "content": "Derzeit noch in Bearbeitung!" ,
+            "content": "Derzeit noch in Bearbeitung!",
             "pyfile": "viewer_info"
         }
     }
