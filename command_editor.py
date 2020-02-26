@@ -50,6 +50,7 @@ def edit_command(name: str, content: str):
 
 def delete_command(name: str):
     data = read_json("command_library.json")
+    pyfile = data["commands"][name]["pyfile"]
     try:
         python_file = data["commands"][name]["pyfile"]
         del data["commands"][name]
@@ -70,9 +71,9 @@ def delete_command(name: str):
                             pyfile_write.write(line)
                 pyfile_read.close()
                 pyfile_write.close()
-                return f"Deleted command named '{name}'!", data["commands"][name]["pyfile"]
+                return f"Deleted command named '{name}'!", pyfile
     except KeyError:
-        return f"Couldn't find command named '{name}'!", data["commands"][name]["pyfile"]
+        return f"Couldn't find command named '{name}'!", pyfile
 
 
 @commands.cog()
@@ -95,7 +96,7 @@ class CommandEditor:
             result = delete_command(name)
             self.bot.unload_module(result[1])
             self.bot.load_module(result[1])
-            await ctx.send(result)
+            await ctx.send(result[0])
 
     @commands.command(name="edit_cmd")
     async def update_command(self, ctx, name: str, *, content: str):
@@ -103,7 +104,7 @@ class CommandEditor:
             result = edit_command(name, content)
             self.bot.unload_module(result[1])
             self.bot.load_module(result[1])
-            await ctx.send(result)
+            await ctx.send(result[0])
 
     @commands.command(name="followage")
     async def followage(self, ctx):

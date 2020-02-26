@@ -22,11 +22,11 @@ class Software:
         await ctx.send(self.data["dx12"]["content"])
 
     @commands.command(name="res")
-    async def resolution(self, ctx):
+    async def res(self, ctx):
         await ctx.send(self.data["res"]["content"])
 
     @commands.command(name="sens")
-    async def sensitivity(self, ctx):
+    async def sens(self, ctx):
         await ctx.send(self.data["sens"]["content"])
 
     @commands.command(name="settings")
