@@ -116,9 +116,8 @@ class CommandEditor:
         for streamers in follow["data"]:
             if streamers["to_id"] == "87252610":
                 followed_at = streamers["followed_at"]
-                print(streamers)
                 con_followed_at = datetime.datetime.strptime(followed_at, "%Y-%m-%dT%H:%M:%SZ")
                 follow_time = datetime.datetime.now()-con_followed_at
                 total_seconds = follow_time.total_seconds()
                 days = total_seconds / 86400
-                await ctx.send(f"Du folgt Moehre schon ~{round(days, 2)} Tage.")
+                await ctx.send(f"Du folgt Moehre schon ~{round(days, 2)} Tage. | {ctx.author.name}")
