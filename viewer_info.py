@@ -14,7 +14,7 @@ class ViewerInfo:
         await ctx.send(self.data["arena"]["content"])
 
     @commands.command(name="auszahlung")
-    async def payout(self, ctx):
+    async def auszahlung(self, ctx):
         await ctx.send(self.data["auszahlung"]["content"])
 
     @commands.command(name="bttv")
@@ -22,7 +22,7 @@ class ViewerInfo:
         await ctx.send(self.data["bttv"]["content"])
 
     @commands.command(name="caps")
-    async def capslock(self, ctx):
+    async def caps(self, ctx):
         await ctx.send(self.data["caps"]["content"])
 
     @commands.command(name="donate")
@@ -34,7 +34,7 @@ class ViewerInfo:
         await ctx.send(self.data["donation"]["content"])
 
     @commands.command(name="duo")
-    async def duo_mate(self, ctx):
+    async def duo(self, ctx):
         await ctx.send(self.data["duo"]["content"])
 
     @commands.command(name="earnings")
@@ -50,11 +50,11 @@ class ViewerInfo:
         await ctx.send(self.data["info"]["content"])
 
     @commands.command(name="mitmachen")
-    async def participate(self, ctx):
+    async def mitmachen(self, ctx):
         await ctx.send(self.data["mitmachen"]["content"])
 
     @commands.command(name="moehren")
-    async def carrots(self, ctx):
+    async def moehren(self, ctx):
         await ctx.send(self.data["moehren"]["content"])
 
     @commands.command(name="prime")
@@ -62,7 +62,7 @@ class ViewerInfo:
         await ctx.send(self.data["prime"]["content"])
 
     @commands.command(name="shop")
-    async def fn_shop(self, ctx):
+    async def shop(self, ctx):
         await ctx.send(self.data["shop"]["content"])
 
     @commands.command(name="spam")
@@ -71,11 +71,11 @@ class ViewerInfo:
         await ctx.send(self.data["spam"]["content"])
 
     @commands.command(name="spielersuche")
-    async def lookin_for_mate(self, ctx):
+    async def spielersuche(self, ctx):
         await ctx.send(self.data["spielersuche"]["content"])
 
     @commands.command(name="sub")
-    async def subscription(self, ctx):
+    async def sub(self, ctx):
         await ctx.send(self.data["sub"]["content"])
 
     @commands.command(name="subgifts")
@@ -87,7 +87,7 @@ class ViewerInfo:
         await ctx.send(self.data["vip"]["content"])
 
     @commands.command(name="überlesen")
-    async def not_read(self, ctx):
+    async def ueberlesen(self, ctx):
         await ctx.send(self.data["überlesen"]["content"])
 
     @commands.command(name="cc")

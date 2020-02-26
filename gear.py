@@ -18,7 +18,7 @@ class Gear:
         await ctx.send(self.data["hardware"]["content"])
 
     @commands.command(name="leitung")
-    async def line(self, ctx):
+    async def leitung(self, ctx):
         await ctx.send(self.data["leitung"]["content"])
 
     @commands.command(name="keyboard")
@@ -26,7 +26,7 @@ class Gear:
         await ctx.send(self.data["keyboard"]["content"])
 
     @commands.command(name="maus")
-    async def mouse(self, ctx):
+    async def maus(self, ctx):
         await ctx.send(self.data["maus"]["content"])
 
     @commands.command(name="mousepad")
@@ -34,7 +34,7 @@ class Gear:
         await ctx.send(self.data["mousepad"]["content"])
 
     @commands.command(name="mic")
-    async def microphone(self, ctx):
+    async def mic(self, ctx):
         await ctx.send(self.data["mic"]["content"])
 
     @commands.command(name="monitor")

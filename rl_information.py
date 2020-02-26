@@ -14,7 +14,7 @@ class RLInformation:
         await ctx.send(self.data["age"]["content"])
 
     @commands.command(name="beruf")
-    async def job(self, ctx):
+    async def beruf(self, ctx):
         await ctx.send(self.data["beruf"]["content"])
 
     @commands.command(name="face")
@@ -22,7 +22,7 @@ class RLInformation:
         await ctx.send(self.data["face"]["content"])
 
     @commands.command(name="herkunft")
-    async def origin(self, ctx):
+    async def herkunft(self, ctx):
         await ctx.send(self.data["herkunft"]["content"])
 
     @commands.command(name="name")
@@ -34,5 +34,5 @@ class RLInformation:
         await ctx.send(self.data["org"]["content"])
 
     @commands.command(name="schule")
-    async def school(self, ctx):
+    async def schule(self, ctx):
         await ctx.send(self.data["schule"]["content"])
