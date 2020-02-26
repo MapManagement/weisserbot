@@ -106,6 +106,13 @@ class CommandEditor:
             self.bot.load_module(result[1])
             await ctx.send(result[0])
 
+    @commands.command(name="reload_mod")
+    async def reload_mod(self, ctx, module_name: str):
+        if await checks.is_mod(ctx) or ctx.author.id == 151631704:
+            self.bot.unload_module(module_name)
+            self.bot.load_module(module_name)
+            await ctx.send("Success!")
+
     @commands.command(name="followage")
     async def followage(self, ctx):
         user_id = ctx.message.author.id
