@@ -5,6 +5,9 @@ import requests
 import datetime
 import checks
 
+blacklisted_commands = ["new_command", "new_cmd", "delete_cmd", "del_cmd", "update_command", "edit_cmd"
+                        "reload_mod", "followage", "subcount", "test"]
+
 
 def read_json(file):
     with open(file, "r") as json_file:
@@ -18,23 +21,26 @@ def write_json(file, data):
 
 
 def create_command(name: str, content: str):
-    blueprint_json = {"content": content, "pyfile": "social_media"}
-    data = read_json("command_library.json")
-    try:
-        check_for_existence = data["commands"][name]
-        return "Command already exists!"
-    except KeyError:
-        data["commands"][name] = blueprint_json
-        data["commands"][name]["content"] = content
-        data["commands"][name]["pyfile"] = "custom_commands"
-        write_json("command_library.json", data)
+    if not name in blacklisted_commands:
+        blueprint_json = {"content": content, "pyfile": "social_media"}
+        data = read_json("command_library.json")
+        try:
+            check_for_existence = data["commands"][name]
+            return "Command already exists!"
+        except KeyError:
+            data["commands"][name] = blueprint_json
+            data["commands"][name]["content"] = content
+            data["commands"][name]["pyfile"] = "custom_commands"
+            write_json("command_library.json", data)
 
-        blueprint_cmd = f"""    @commands.command(name="{name}")\n    async def {name}(self, ctx):\n""" \
-                        f"""        await ctx.send(self.data['{name}']['content'])\n"""
-        with open("custom_commands.py", "a") as cmd_file:
-            cmd_file.write(blueprint_cmd)
-            cmd_file.close()
-        return f"Added command '{name}'!"
+            blueprint_cmd = f"""    @commands.command(name="{name}")\n    async def {name}(self, ctx):\n""" \
+                            f"""        await ctx.send(self.data['{name}']['content'])\n"""
+            with open("custom_commands.py", "a") as cmd_file:
+                cmd_file.write(blueprint_cmd)
+                cmd_file.close()
+            return f"Added command '{name}'!"
+    else:
+        return "Command already exists!"
 
 
 def edit_command(name: str, content: str):
@@ -127,4 +133,11 @@ class CommandEditor:
                 follow_time = datetime.datetime.now()-con_followed_at
                 total_seconds = follow_time.total_seconds()
                 days = total_seconds / 86400
-                await ctx.send(f"Du folgt Moehre schon ~{round(days, 2)} Tage. | {ctx.author.name}")
+                await ctx.send(f"Du folgst Moehre schon ~{round(days, 2)} Tage. | {ctx.author.name}")
+
+    @commands.command(name="subcount")
+    async def subcount(self, ctx):
+        url = f"https://api.twitch.tv/helix/subscriptions?broadcaster_id=87252610"
+        headers = {"Client-ID": secrets.twitch_api_key}
+        sub_request = requests.get(url, headers=headers)
+        print(sub_request.content)

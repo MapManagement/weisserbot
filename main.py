@@ -24,7 +24,7 @@ class Bot(commands.Bot):
         channel = metadata.channel
         user_name = metadata.user.name
         months = metadata.cumulative_months
-        await channel.send(f"Vielen Dank für deinen Sub im {months}. Monat, {user_name}!")
+        await channel.send(f"\me Vielen Dank für deinen Sub im {months}. Monat, {user_name}!")
 
     @commands.command(name="test")
     async def test(self, ctx):
@@ -33,14 +33,14 @@ class Bot(commands.Bot):
     async def twitter_cycler(self):
         channel = Bot.get_channel(self, "WeisseMoehre")
         while True:
-            await asyncio.sleep(600)
+            await asyncio.sleep(1200)
             await channel.send("Twitter: https://twitter.com/WeisseMoehre")
 
     async def insta_cycler(self):
         channel = Bot.get_channel(self, "WeisseMoehre")
-        await asyncio.sleep(300)
+        await asyncio.sleep(600)
         while True:
-            await asyncio.sleep(600)
+            await asyncio.sleep(1200)
             await channel.send("Instagram: https://www.instagram.com/weissemoehre/?hl=de")
 
     def load_cogs(self):
