@@ -45,7 +45,7 @@ class Bot(commands.Bot):
 
     def load_cogs(self):
         extensions = ["social_media", "custom_commands", "gear", "rl_information", "software", "viewer_info",
-                      "command_editor"]
+                      "command_editor", "watchtime_counter"]
         for extension in extensions:
             Bot.load_module(self, name=extension)
 

@@ -8,4 +8,3 @@ async def cycler(to_cycle):
         print("test")
         await to_cycle
         await asyncio.sleep(1200)
-
