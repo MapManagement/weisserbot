@@ -11,28 +11,28 @@ class RLInformation:
 
     @commands.command(name="age")
     async def age(self, ctx):
-        await ctx.send(self.data["age"]["content"])
+        await ctx.send(self.data["age"]["content"] + f" | {ctx.message.author.name}")
 
     @commands.command(name="beruf")
     async def beruf(self, ctx):
-        await ctx.send(self.data["beruf"]["content"])
+        await ctx.send(self.data["beruf"]["content"] + f" | {ctx.message.author.name}")
 
     @commands.command(name="face")
     async def face(self, ctx):
-        await ctx.send(self.data["face"]["content"])
+        await ctx.send(self.data["face"]["content"] + f" | {ctx.message.author.name}")
 
     @commands.command(name="herkunft")
     async def herkunft(self, ctx):
-        await ctx.send(self.data["herkunft"]["content"])
+        await ctx.send(self.data["herkunft"]["content"] + f" | {ctx.message.author.name}")
 
     @commands.command(name="name")
     async def name(self, ctx):
-        await ctx.send(self.data["name"]["content"])
+        await ctx.send(self.data["name"]["content"] + f" | {ctx.message.author.name}")
 
     @commands.command(name="org")
     async def org(self, ctx):
-        await ctx.send(self.data["org"]["content"])
+        await ctx.send(self.data["org"]["content"] + f" | {ctx.message.author.name}")
 
     @commands.command(name="schule")
     async def schule(self, ctx):
-        await ctx.send(self.data["schule"]["content"])
+        await ctx.send(self.data["schule"]["content"] + f" | {ctx.message.author.name}")

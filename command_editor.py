@@ -6,7 +6,7 @@ import datetime
 import checks
 
 blacklisted_commands = ["new_command", "new_cmd", "delete_cmd", "del_cmd", "update_command", "edit_cmd"
-                        "reload_mod", "followage", "subcount", "test"]
+                        "reload_mod", "followage", "subcount", "test", "watchtime", "send_watchtime"]
 
 
 def read_json(file):
@@ -34,7 +34,7 @@ def create_command(name: str, content: str):
             write_json("command_library.json", data)
 
             blueprint_cmd = f"""    @commands.command(name="{name}")\n    async def {name}(self, ctx):\n""" \
-                            f"""        await ctx.send(self.data['{name}']['content'])\n"""
+                            """        await ctx.send(self.data['"""+ name +"""""""']['content'] + f' | {ctx.message.author.name}')\n"""
             with open("custom_commands.py", "a") as cmd_file:
                 cmd_file.write(blueprint_cmd)
                 cmd_file.close()
