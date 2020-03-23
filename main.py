@@ -28,7 +28,7 @@ class Bot(commands.Bot):
 
     @commands.command(name="test")
     async def test(self, ctx):
-        await ctx.send("Hello")
+        await ctx.send("Hello" + f" | {ctx.message.author.name}")
 
     async def twitter_cycler(self):
         channel = Bot.get_channel(self, "WeisseMoehre")

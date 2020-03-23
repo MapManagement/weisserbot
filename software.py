@@ -11,24 +11,24 @@ class Software:
 
     @commands.command(name="brightness")
     async def brightness(self, ctx):
-        await ctx.send(self.data["brightness"]["content"])
+        await ctx.send(self.data["brightness"]["content"] + f" | {ctx.message.author.name}")
 
     @commands.command(name="colorblind")
     async def colorblind(self, ctx):
-        await ctx.send(self.data["colorblind"]["content"])
+        await ctx.send(self.data["colorblind"]["content"] + f" | {ctx.message.author.name}")
 
     @commands.command(name="dx12")
     async def dx12(self, ctx):
-        await ctx.send(self.data["dx12"]["content"])
+        await ctx.send(self.data["dx12"]["content"] + f" | {ctx.message.author.name}")
 
     @commands.command(name="res")
     async def res(self, ctx):
-        await ctx.send(self.data["res"]["content"])
+        await ctx.send(self.data["res"]["content"] + f" | {ctx.message.author.name}")
 
     @commands.command(name="sens")
     async def sens(self, ctx):
-        await ctx.send(self.data["sens"]["content"])
+        await ctx.send(self.data["sens"]["content"] + f" | {ctx.message.author.name}")
 
     @commands.command(name="settings")
     async def settings(self, ctx):
-        await ctx.send(self.data["settings"]["content"])
+        await ctx.send(self.data["settings"]["content"] + f" | {ctx.message.author.name}")

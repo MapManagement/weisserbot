@@ -28,7 +28,7 @@ class WatchTime:
         existance_check = cursor().execute(f"SELECT EXISTS (SELECT Name FROM user WHERE Name = '{str(user_name)}')").fetchone()
         if existance_check[0]:
             user_watchtime = cursor().execute(f"SELECT Hours FROM user WHERE Name = '{str(user_name)}'").fetchone()[0]
-            await ctx.send(f"You already watched {user_watchtime} hours!")
+            await ctx.send(f"You already watched {user_watchtime} hours!" + f" | {ctx.message.author.name}")
         else:
             await ctx.send(f"Sorry, couldn't find any data for {user_name}!")
 
