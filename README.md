@@ -21,4 +21,4 @@ Future
 ------
 * creating a website connected to the bot
 * possibly creating a public Repo on GitHub
-* implementing MySQL databases for WatchTime and other stuff
+* implementing MySQL databases for WatchTime and other stuff --> finished
