@@ -1,7 +1,6 @@
 from twitchio.ext import commands
 import secrets
 import sqlalchemy
-import random
 import asyncio
 import requests
 
@@ -28,7 +27,7 @@ class WatchTime:
         existance_check = cursor().execute(f"SELECT EXISTS (SELECT Name FROM user WHERE Name = '{str(user_name)}')").fetchone()
         if existance_check[0]:
             user_watchtime = cursor().execute(f"SELECT Hours FROM user WHERE Name = '{str(user_name)}'").fetchone()[0]
-            await ctx.send(f"You already watched {user_watchtime} hours!" + f" | {ctx.message.author.name}")
+            await ctx.send(f"You already watched {user_watchtime/60} hours!" + f" | {ctx.message.author.name}")
         else:
             await ctx.send(f"Sorry, couldn't find any data for {user_name}!")
 
@@ -38,17 +37,20 @@ class WatchTime:
         streamer_request = requests.get(url, headers=headers)
         streamer_data = streamer_request.json()
         while True:
-            await asyncio.sleep(720)
-            if streamer_data["data"]:
+            await asyncio.sleep(10)
+            if not streamer_data["data"]:
                 chatters_request = requests.get("https://tmi.twitch.tv/group/user/weissemoehre/chatters")
                 chatters_data = chatters_request.json()
                 chatters = chatters_data["chatters"]
                 for section in chatters.values():
+                    print(section)
                     for chatter in section:
+                        print(chatter)
                         # inserting the data into the db and adding 0.2 hours to every id that is listed
                         existance_check = cursor().execute(f"SELECT EXISTS (SELECT Name FROM user WHERE Name = '{str(chatter)}')").fetchone()
+                        print(existance_check)
                         if existance_check[0]:
-                            cursor().execute(f"UPDATE user SET (Hours = Hours + 0.2) WHERE Name = '{str(chatter)}'")
+                            cursor().execute(f"UPDATE user SET Hours = Hours + 12 WHERE Name = '{str(chatter)}'")
                         else:
-                            cursor().execute(f"INSERT INTO user (Name, Hours) VALUES ('{str(chatter)}', 0")
-
+                            cursor().execute(f"INSERT INTO user (Name, Hours) VALUES ('{str(chatter)}', 12)")
+            break
