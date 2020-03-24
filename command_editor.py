@@ -10,7 +10,7 @@ blacklisted_commands = ["new_command", "new_cmd", "delete_cmd", "del_cmd", "upda
 
 
 def read_json(file):
-    with open(file, "r") as json_file:
+    with open(file, "r", encoding="utf8") as json_file:
         data = json.load(json_file)
         return data
 
