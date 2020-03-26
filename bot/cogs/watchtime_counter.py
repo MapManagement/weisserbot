@@ -1,5 +1,5 @@
 from twitchio.ext import commands
-import secrets
+from bot.utils import secrets
 import sqlalchemy
 import asyncio
 import requests
@@ -27,7 +27,7 @@ class WatchTime:
         existance_check = cursor().execute(f"SELECT EXISTS (SELECT Name FROM user WHERE Name = '{str(user_name)}')").fetchone()
         if existance_check[0]:
             user_watchtime = cursor().execute(f"SELECT Hours FROM user WHERE Name = '{str(user_name)}'").fetchone()[0]
-            await ctx.send(f"You already watched {user_watchtime/60} hours!" + f" | {ctx.message.author.name}")
+            await ctx.send(f"You already watched {round(user_watchtime/60, 2)} hours!" + f" | {ctx.message.author.name}")
         else:
             await ctx.send(f"Sorry, couldn't find any data for {user_name}!")
 

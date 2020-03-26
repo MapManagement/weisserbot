@@ -1,10 +1,13 @@
 from twitchio.ext import commands
 import json
-import secrets
 import requests
 import datetime
-import checks
+import os
+from bot.utils import checks, secrets
 
+
+cmd_lib_path = os.path.realpath(os.path.join(os.getcwd(),
+                                              os.path.dirname(__file__))) + "/command_library.json"
 blacklisted_commands = ["new_command", "new_cmd", "delete_cmd", "del_cmd", "update_command", "edit_cmd"
                         "reload_mod", "followage", "subcount", "test", "watchtime", "send_watchtime"]
 
@@ -23,7 +26,7 @@ def write_json(file, data):
 def create_command(name: str, content: str):
     if not name in blacklisted_commands:
         blueprint_json = {"content": content, "pyfile": "social_media"}
-        data = read_json("command_library.json")
+        data = read_json(cmd_lib_path)
         try:
             check_for_existence = data["commands"][name]
             return "Command already exists!"
@@ -31,7 +34,7 @@ def create_command(name: str, content: str):
             data["commands"][name] = blueprint_json
             data["commands"][name]["content"] = content
             data["commands"][name]["pyfile"] = "custom_commands"
-            write_json("command_library.json", data)
+            write_json(cmd_lib_path, data)
 
             blueprint_cmd = f"""    @commands.command(name="{name}")\n    async def {name}(self, ctx):\n""" \
                             """        await ctx.send(self.data['"""+ name +"""""""']['content'] + f' | {ctx.message.author.name}')\n"""
@@ -44,18 +47,18 @@ def create_command(name: str, content: str):
 
 
 def edit_command(name: str, content: str):
-    data = read_json("command_library.json")
+    data = read_json(cmd_lib_path)
     try:
         check_for_existence = data["commands"][name]
         data["commands"][name]["content"] = content
-        write_json("command_library.json", data)
+        write_json(cmd_lib_path, data)
         return f"Edited command named '{name}'!", data["commands"][name]["pyfile"]
     except KeyError:
         return f"Couldn't find command named '{name}'!", data["commands"][name]["pyfile"]
 
 
 def delete_command(name: str):
-    data = read_json("command_library.json")
+    data = read_json(cmd_lib_path)
     pyfile = data["commands"][name]["pyfile"]
     try:
         python_file = data["commands"][name]["pyfile"]

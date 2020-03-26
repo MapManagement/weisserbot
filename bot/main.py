@@ -1,5 +1,5 @@
 from twitchio.ext import commands
-import secrets
+from bot.utils import secrets
 import asyncio
 
 
@@ -44,8 +44,8 @@ class Bot(commands.Bot):
             await channel.send("Instagram: https://www.instagram.com/weissemoehre/?hl=de")
 
     def load_cogs(self):
-        extensions = ["social_media", "custom_commands", "gear", "rl_information", "software", "viewer_info",
-                      "command_editor", "watchtime_counter"]
+        extensions = ["bot.cogs.social_media", "bot.cogs.custom_commands", "bot.cogs.gear", "bot.cogs.rl_information", "bot.cogs.software", "bot.cogs.viewer_info",
+                      "bot.cogs.command_editor", "bot.cogs.watchtime_counter"]
         for extension in extensions:
             Bot.load_module(self, name=extension)
 
