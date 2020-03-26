@@ -1,5 +1,5 @@
-/secrets.py
-/test.py
+/bot/utils/secrets.py
+/bot/utils/test.py
 /venv/
 .idea/
 __pycache__/

@@ -1,5 +1,5 @@
 from twitchio.ext import commands
-import command_editor
+from bot.cogs import command_editor
 
 
 @commands.cog()
@@ -7,7 +7,7 @@ class SocialMedia:
 
     def __init__(self, bot):
         self.bot = bot
-        self.data = command_editor.read_json("command_library.json")["commands"]
+        self.data = command_editor.read_json(command_editor.cmd_lib_path)["commands"]
 
     @commands.command(name="twitter")
     async def twitter(self, ctx):
