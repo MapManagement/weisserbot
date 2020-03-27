@@ -1,6 +1,6 @@
 /bot/utils/secrets.py
 /bot/utils/test.py
-*.sql
+/bot/weissesbackup.sql
 /venv/
 .idea/
 __pycache__/
