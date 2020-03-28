@@ -24,12 +24,14 @@ class WatchTime:
     @commands.command(name="watchtime")
     async def send_watchtime(self, ctx):
         user_name = ctx.message.author.name
-        existance_check = cursor().execute(f"SELECT EXISTS (SELECT Name FROM user WHERE Name = '{str(user_name)}')").fetchone()
-        if existance_check[0]:
-            user_watchtime = cursor().execute(f"SELECT Hours FROM user WHERE Name = '{str(user_name)}'").fetchone()[0]
+        existence_check = cursor().execute("SELECT EXISTS (SELECT Name FROM user WHERE Name = %(user_name)s)",
+                                           {"user_name": str(user_name)}).fetchone()
+        if existence_check[0]:
+            user_watchtime = cursor().execute(f"SELECT Hours FROM user WHERE Name = %(user_name)s",
+                                              {"user_name": str(user_name)}).fetchone()[0]
             await ctx.send(f"You already watched {round(user_watchtime/60, 2)} hours!" + f" | {ctx.message.author.name}")
         else:
-            await ctx.send(f"Sorry, couldn't find any data for {user_name}!")
+            await ctx.send(f"Sorry, couldn't find any data for {str(user_name)}!")
 
     async def event_ready(self):
         url = f"https://api.twitch.tv/helix/streams?user_login=weissemoehre"
@@ -45,8 +47,11 @@ class WatchTime:
                 for section in chatters.values():
                     for chatter in section:
                         # inserting the data into the db and adding 0.2 hours to every id that is listed
-                        existance_check = cursor().execute(f"SELECT EXISTS (SELECT Name FROM user WHERE Name = '{str(chatter)}')").fetchone()
-                        if existance_check[0]:
-                            cursor().execute(f"UPDATE user SET Hours = Hours + 12 WHERE Name = '{str(chatter)}'")
+                        existence_check = cursor().execute(f"SELECT EXISTS (SELECT Name FROM user WHERE Name = %(chatter_name)s)",
+                                                           {"chatter_name": str(chatter)}).fetchone()
+                        if existence_check[0]:
+                            cursor().execute(f"UPDATE user SET Hours = Hours + 12 WHERE Name = %(chatter_name)s",
+                                             {"chatter_name": str(chatter)})
                         else:
-                            cursor().execute(f"INSERT INTO user (Name, Hours) VALUES ('{str(chatter)}', 12)")
+                            cursor().execute(f"INSERT INTO user (Name, Hours) VALUES (%(chatter_name)s, 12)",
+                                             {"chatter_name": str(chatter)})
