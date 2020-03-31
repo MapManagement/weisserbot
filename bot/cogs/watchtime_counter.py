@@ -29,9 +29,9 @@ class WatchTime:
         if existence_check[0]:
             user_watchtime = cursor().execute(f"SELECT Hours FROM user WHERE Name = %(user_name)s",
                                               {"user_name": str(user_name)}).fetchone()[0]
-            await ctx.send(f"You already watched {round(user_watchtime/60, 2)} hours!" + f" | {ctx.message.author.name}")
+            await ctx.send(f"\me You already watched {round(user_watchtime/60, 2)} hours!" + f" | {ctx.message.author.name}")
         else:
-            await ctx.send(f"Sorry, couldn't find any data for {str(user_name)}!")
+            await ctx.send(f"\me Sorry, couldn't find any data for {str(user_name)}!")
 
     async def event_ready(self):
         url = f"https://api.twitch.tv/helix/streams?user_login=weissemoehre"
