@@ -5,11 +5,11 @@ import datetime
 import os
 from bot.utils import checks, secrets
 
-
 cmd_lib_path = os.path.realpath(os.path.join(os.getcwd(),
-                                              os.path.dirname(__file__))) + "/command_library.json"
+                                             os.path.dirname(__file__))) + "/command_library.json"
 blacklisted_commands = ["new_command", "new_cmd", "delete_cmd", "del_cmd", "update_command", "edit_cmd"
-                        "reload_mod", "followage", "subcount", "test", "watchtime", "send_watchtime"]
+                                                                                             "reload_mod", "followage",
+                        "subcount", "test", "watchtime", "send_watchtime"]
 
 
 def read_json(file):
@@ -29,7 +29,7 @@ def create_command(name: str, content: str):
         data = read_json(cmd_lib_path)
         try:
             check_for_existence = data["commands"][name]
-            return "Command already exists!"
+            return "\me Command exists already!"
         except KeyError:
             data["commands"][name] = blueprint_json
             data["commands"][name]["content"] = content
@@ -37,13 +37,13 @@ def create_command(name: str, content: str):
             write_json(cmd_lib_path, data)
 
             blueprint_cmd = f"""    @commands.command(name="{name}")\n    async def {name}(self, ctx):\n""" \
-                            """        await ctx.send(self.data['"""+ name +"""""""']['content'] + f' | {ctx.message.author.name}')\n"""
+                            """        await ctx.send(self.data['""" + name + """""""']['content'] + f' | {ctx.message.author.name}')\n"""
             with open("custom_commands.py", "a") as cmd_file:
                 cmd_file.write(blueprint_cmd)
                 cmd_file.close()
-            return f"Added command '{name}'!"
+            return f"\me Added command '{name}'!"
     else:
-        return "Command already exists!"
+        return "\me Command exists already!"
 
 
 def edit_command(name: str, content: str):
@@ -52,9 +52,9 @@ def edit_command(name: str, content: str):
         check_for_existence = data["commands"][name]
         data["commands"][name]["content"] = content
         write_json(cmd_lib_path, data)
-        return f"Edited command named '{name}'!", data["commands"][name]["pyfile"]
+        return f"\me Edited command named '{name}'!", data["commands"][name]["pyfile"]
     except KeyError:
-        return f"Couldn't find command named '{name}'!", data["commands"][name]["pyfile"]
+        return f"\me ouldn't find any command named '{name}'!", data["commands"][name]["pyfile"]
 
 
 def delete_command(name: str):
@@ -80,9 +80,9 @@ def delete_command(name: str):
                             pyfile_write.write(line)
                 pyfile_read.close()
                 pyfile_write.close()
-                return f"Deleted command named '{name}'!", pyfile
+                return f"\me Deleted command named '{name}'!", pyfile
     except KeyError:
-        return f"Couldn't find command named '{name}'!", pyfile
+        return f"\me Couldn't find any command named '{name}'!", pyfile
 
 
 @commands.cog()
@@ -120,7 +120,7 @@ class CommandEditor:
         if await checks.is_mod(ctx) or ctx.author.id == 151631704:
             self.bot.unload_module(module_name)
             self.bot.load_module(module_name)
-            await ctx.send("Success!")
+            await ctx.send("\me Success!")
 
     @commands.command(name="followage")
     async def followage(self, ctx):
@@ -133,10 +133,10 @@ class CommandEditor:
             if streamers["to_id"] == "87252610":
                 followed_at = streamers["followed_at"]
                 con_followed_at = datetime.datetime.strptime(followed_at, "%Y-%m-%dT%H:%M:%SZ")
-                follow_time = datetime.datetime.now()-con_followed_at
+                follow_time = datetime.datetime.now() - con_followed_at
                 total_seconds = follow_time.total_seconds()
                 days = total_seconds / 86400
-                await ctx.send(f"Du folgst Moehre schon ~{round(days, 2)} Tage. | {ctx.author.name}")
+                await ctx.send(f"\me Du folgst Moehre schon ~{round(days, 2)} Tage. | {ctx.author.name}")
 
     @commands.command(name="subcount")
     async def subcount(self, ctx):
