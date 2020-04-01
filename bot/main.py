@@ -24,7 +24,7 @@ class Bot(commands.Bot):
         channel = metadata.channel
         user_name = metadata.user.name
         months = metadata.cumulative_months
-        await channel.send(f"\me Vielen Dank für deinen Sub im {months}. Monat, {user_name}!")
+        await channel.send(f"/me Vielen Dank für deinen Sub im {months}. Monat, {user_name}!")
 
     @commands.command(name="test")
     async def test(self, ctx):
@@ -41,7 +41,7 @@ class Bot(commands.Bot):
         await asyncio.sleep(600)
         while True:
             await asyncio.sleep(1200)
-            await channel.send("\me Instagram: https://www.instagram.com/weissemoehre/?hl=de")
+            await channel.send("/me Instagram: https://www.instagram.com/weissemoehre/?hl=de")
 
     def load_cogs(self):
         extensions = ["bot.cogs.social_media", "bot.cogs.custom_commands", "bot.cogs.gear", "bot.cogs.rl_information",
