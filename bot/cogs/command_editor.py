@@ -5,8 +5,8 @@ import datetime
 import os
 from bot.utils import checks, secrets
 
-cmd_lib_path = os.path.realpath(os.path.join(os.getcwd(),
-                                             os.path.dirname(__file__))) + "/command_library.json"
+lib_path = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+
 blacklisted_commands = ["new_command", "new_cmd", "delete_cmd", "del_cmd", "update_command", "edit_cmd"
                                                                                              "reload_mod", "followage",
                         "subcount", "test", "watchtime", "send_watchtime"]
@@ -26,7 +26,7 @@ def write_json(file, data):
 def create_command(name: str, content: str):
     if not name in blacklisted_commands:
         blueprint_json = {"content": content, "pyfile": "social_media"}
-        data = read_json(cmd_lib_path)
+        data = read_json(lib_path + f"{os.sep}command_library.json")
         try:
             check_for_existence = data["commands"][name]
             return "/me Command exists already!"
@@ -34,11 +34,15 @@ def create_command(name: str, content: str):
             data["commands"][name] = blueprint_json
             data["commands"][name]["content"] = content
             data["commands"][name]["pyfile"] = "custom_commands"
-            write_json(cmd_lib_path, data)
+            write_json(lib_path + f"{os.sep}command_library.json", data)
 
-            blueprint_cmd = f"""    @commands.command(name="{name}")\n    async def {name}(self, ctx):\n""" \
-                            """        await ctx.send(self.data['""" + name + """""""']['content'] + f' | {ctx.message.author.name}')\n"""
-            with open("custom_commands.py", "a") as cmd_file:
+            blueprint_cmd = \
+                f"""
+    @commands.command(name="{name}")
+    async def {name}(self, ctx):
+        await ctx.send(self.data['{name}']['content'] + f' | {{ctx.message.author.name}}')\n
+                """
+            with open("cogs/custom_commands.py", "a") as cmd_file:
                 cmd_file.write(blueprint_cmd)
                 cmd_file.close()
             return f"/me Added command '{name}'!"
@@ -47,18 +51,18 @@ def create_command(name: str, content: str):
 
 
 def edit_command(name: str, content: str):
-    data = read_json(cmd_lib_path)
+    data = read_json(lib_path + f"{os.sep}command_library.json")
     try:
         check_for_existence = data["commands"][name]
         data["commands"][name]["content"] = content
-        write_json(cmd_lib_path, data)
+        write_json(lib_path + f"{os.sep}command_library.json", data)
         return f"/me Edited command named '{name}'!", data["commands"][name]["pyfile"]
     except KeyError:
         return f"/me ouldn't find any command named '{name}'!", data["commands"][name]["pyfile"]
 
 
 def delete_command(name: str):
-    data = read_json(cmd_lib_path)
+    data = read_json(lib_path + f"{os.sep}command_library.json")
     pyfile = data["commands"][name]["pyfile"]
     try:
         python_file = data["commands"][name]["pyfile"]
@@ -66,9 +70,9 @@ def delete_command(name: str):
         write_json("command_library.json", data)
         eraser = False
 
-        with open(f"{python_file}.py", "r") as pyfile_read:
+        with open(f"cogs/{python_file}.py", "r") as pyfile_read:
             lines = pyfile_read.readlines()
-            with open(f"{python_file}.py", "w") as pyfile_write:
+            with open(f"cogs/{python_file}.py", "w") as pyfile_write:
                 for line in lines:
                     if eraser:
                         if line.endswith('")\n'):
@@ -95,24 +99,24 @@ class CommandEditor:
     async def new_command(self, ctx, name: str, *, content: str):
         if await checks.is_mod(ctx):
             result = create_command(name, content)
-            self.bot.unload_module("custom_commands")
-            self.bot.load_module("custom_commands")
+            self.bot.unload_module("bot.cogs.custom_commands")
+            self.bot.load_module("bot.cogs.custom_commands")
             await ctx.send(result)
 
     @commands.command(name="del_cmd")
     async def delete_command(self, ctx, name: str):
         if await checks.is_mod(ctx):
             result = delete_command(name)
-            self.bot.unload_module(result[1])
-            self.bot.load_module(result[1])
+            self.bot.unload_module(f"bot.cogs.{result[1]}")
+            self.bot.load_module(f"bot.cogs.{result[1]}")
             await ctx.send(result[0])
 
     @commands.command(name="edit_cmd")
     async def update_command(self, ctx, name: str, *, content: str):
-        if await checks.is_mod(ctx):
+        if not await checks.is_mod(ctx):
             result = edit_command(name, content)
-            self.bot.unload_module(result[1])
-            self.bot.load_module(result[1])
+            self.bot.unload_module(f"bot.cogs.{result[1]}")
+            self.bot.load_module(f"bot.cogs.{result[1]}")
             await ctx.send(result[0])
 
     @commands.command(name="reload_mod")

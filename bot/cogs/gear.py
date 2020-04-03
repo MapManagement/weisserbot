@@ -1,5 +1,6 @@
 from twitchio.ext import commands
 from bot.cogs import command_editor
+import os
 
 
 @commands.cog()
@@ -7,7 +8,7 @@ class Gear:
 
     def __init__(self, bot):
         self.bot = bot
-        self.data = command_editor.read_json(command_editor.cmd_lib_path)["commands"]
+        self.data = command_editor.read_json(command_editor.lib_path + f"{os.sep}command_library.json")["commands"]
 
     @commands.command(name="facecam")
     async def facecam(self, ctx):
