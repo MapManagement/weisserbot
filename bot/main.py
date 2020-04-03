@@ -34,7 +34,7 @@ class Bot(commands.Bot):
         channel = Bot.get_channel(self, "WeisseMoehre")
         while True:
             await asyncio.sleep(1200)
-            await channel.send("\me Twitter: https://twitter.com/WeisseMoehre")
+            await channel.send("/me Twitter: https://twitter.com/WeisseMoehre")
 
     async def insta_cycler(self):
         channel = Bot.get_channel(self, "WeisseMoehre")
