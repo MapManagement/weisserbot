@@ -11,5 +11,5 @@ class CustomCommands:
 
     def __init__(self, bot):
         self.bot = bot
-        self.data = command_editor.read_json(command_editor.lib_path + f"{os.sep}command_library.json")["commands"]
+        self.data = command_editor.read_json(command_editor.lib_path + "command_library.json")["commands"]
 

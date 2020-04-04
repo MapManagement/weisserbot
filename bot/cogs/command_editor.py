@@ -5,7 +5,7 @@ import datetime
 import os
 from bot.utils import checks, secrets
 
-lib_path = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+lib_path = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__))) + os.sep
 
 blacklisted_commands = ["new_command", "new_cmd", "delete_cmd", "del_cmd", "update_command", "edit_cmd"
                                                                                              "reload_mod", "followage",
@@ -26,7 +26,7 @@ def write_json(file, data):
 def create_command(name: str, content: str):
     if not name in blacklisted_commands:
         blueprint_json = {"content": content, "pyfile": "social_media"}
-        data = read_json(lib_path + f"{os.sep}command_library.json")
+        data = read_json(lib_path + "command_library.json")
         try:
             check_for_existence = data["commands"][name]
             return "/me Command exists already!"
@@ -34,7 +34,7 @@ def create_command(name: str, content: str):
             data["commands"][name] = blueprint_json
             data["commands"][name]["content"] = content
             data["commands"][name]["pyfile"] = "custom_commands"
-            write_json(lib_path + f"{os.sep}command_library.json", data)
+            write_json(lib_path + "command_library.json", data)
 
             blueprint_cmd = \
                 f"""
@@ -51,18 +51,18 @@ def create_command(name: str, content: str):
 
 
 def edit_command(name: str, content: str):
-    data = read_json(lib_path + f"{os.sep}command_library.json")
+    data = read_json(lib_path + "command_library.json")
     try:
         check_for_existence = data["commands"][name]
         data["commands"][name]["content"] = content
-        write_json(lib_path + f"{os.sep}command_library.json", data)
+        write_json(lib_path + "command_library.json", data)
         return f"/me Edited command named '{name}'!", data["commands"][name]["pyfile"]
     except KeyError:
         return f"/me ouldn't find any command named '{name}'!", data["commands"][name]["pyfile"]
 
 
 def delete_command(name: str):
-    data = read_json(lib_path + f"{os.sep}command_library.json")
+    data = read_json(lib_path + "command_library.json")
     pyfile = data["commands"][name]["pyfile"]
     try:
         python_file = data["commands"][name]["pyfile"]
