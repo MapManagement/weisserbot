@@ -30,3 +30,4 @@ Future
 - [x] implementing MySQL databases for watchtime and other stuff
 - [ ] finishing sub count command
 - [ ] finding a solution for problems with followage command
+- [ ] replacing json file with database and message_handler
