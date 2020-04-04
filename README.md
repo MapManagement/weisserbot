@@ -3,8 +3,8 @@ Bot
 TwitchBot written in Python using [TwitchIO](https://github.com/TwitchIO/TwitchIO).
 Currently only [Weissemoehre](https://www.twitch.tv/weissemoehre) is using this  specific bot on his Twitch Channel.
 Further implementations are planned and listed at the "Future" section. If you also have ideas or want
-to report a bug, just message [Mapman](https://twitter.com/MapManagement) or
-[WeisseMoehre](https://twitter.com/WeisseMoehre) on Twitter including your concern or contribute your ideas/fixes.
+to report a bug, either message [Mapman](https://twitter.com/MapManagement) or
+[WeisseMoehre](https://twitter.com/WeisseMoehre) on Twitter including your concern or just contribute your ideas/fixes.
 Each constructive contribution is welcomed and will hopefully improve the code and add more features to use.
 
 HowTo
@@ -19,9 +19,14 @@ HowTo
     
     Delete command
     !del_cmd <command_name>
+    
+    Reload a module
+    !reload_mod <module_name>
 
 Future
 ------
-* creating a website connected to the bot
-* possibly creating a public Repo on GitHub --> done
-* implementing MySQL databases for WatchTime and other stuff --> done
+- [ ] creating a website connected to the bot
+- [x] possibly creating a public repo on GitHub 
+- [x] implementing MySQL databases for watchtime and other stuff
+- [ ] finishing sub count command
+- [ ] finding a solution for problems with followage command
