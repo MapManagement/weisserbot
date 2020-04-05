@@ -1,5 +1,6 @@
 from twitchio.ext import commands
 from bot.utils import secrets
+from bot.cogs import command_editor
 import sqlalchemy
 import asyncio
 import requests
@@ -33,7 +34,7 @@ class WatchTime:
         else:
             await ctx.send(f"/me Sorry, couldn't find any data for {str(user_name)}!")
 
-    async def event_ready(self):
+    async def watchtime_tracker(self):
         url = f"https://api.twitch.tv/helix/streams?user_login=weissemoehre"
         headers = {'Client-ID': secrets.twitch_api_key}
         streamer_request = requests.get(url, headers=headers)
@@ -46,12 +47,24 @@ class WatchTime:
                 chatters = chatters_data["chatters"]
                 for section in chatters.values():
                     for chatter in section:
-                        # inserting the data into the db and adding 0.2 hours to every id that is listed
-                        existence_check = cursor().execute(f"SELECT EXISTS (SELECT Name FROM user WHERE Name = %(chatter_name)s)",
-                                                           {"chatter_name": str(chatter)}).fetchone()
-                        if existence_check[0]:
-                            cursor().execute(f"UPDATE user SET Hours = Hours + 12 WHERE Name = %(chatter_name)s",
-                                             {"chatter_name": str(chatter)})
+                        users = command_editor.read_json("utils/temp_watchtime.json")
+                        if chatter in users["users"]:
+                            users["users"][str(chatter)] += 12
                         else:
-                            cursor().execute(f"INSERT INTO user (Name, Hours) VALUES (%(chatter_name)s, 12)",
-                                             {"chatter_name": str(chatter)})
+                            users["users"][str(chatter)] = 12
+                        command_editor.write_json("utils/temp_watchtime.json", users)
+
+    async def temp_watchtime_to_db(self):
+        while True:
+            await asyncio.sleep(3600)
+            users = command_editor.read_json("utils/temp_watchtime.json")
+            command_editor.write_json("utils/temp_watchtime.json", "{'users':{}}")
+            for user in users["users"]:
+                existence_check = cursor().execute(f"SELECT EXISTS (SELECT Name FROM user WHERE Name = %(chatter_name)s)",
+                                                   {"chatter_name": str(user)}).fetchone()
+                if existence_check[0]:
+                    cursor().execute(f"UPDATE user SET Hours = Hours + 12 WHERE Name = %(chatter_name)s",
+                                     {"chatter_name": str(user)})
+                else:
+                    cursor().execute(f"INSERT INTO user (Name, Hours) VALUES (%(chatter_name)s, 12)",
+                                     {"chatter_name": str(user)})

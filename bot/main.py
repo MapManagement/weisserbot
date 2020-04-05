@@ -1,5 +1,6 @@
 from twitchio.ext import commands
 from bot.utils import secrets
+from bot.cogs import watchtime_counter
 import asyncio
 
 
@@ -15,7 +16,9 @@ class Bot(commands.Bot):
         print(f"Logging in as {self.nick}. Joining {self.initial_channels[0]}'s chat.\n"
               "Ready to work!\n"
               "----------------")
-        await asyncio.gather(self.twitter_cycler(), self.insta_cycler())
+        await asyncio.gather(self.twitter_cycler(), self.insta_cycler(),
+                             watchtime_counter.WatchTime(Bot).watchtime_tracker(),
+                             watchtime_counter.WatchTime(Bot).temp_watchtime_to_db())
 
     async def event_message(self, message):
         await self.handle_commands(message)
