@@ -143,7 +143,9 @@ class CommandEditor:
 
     @commands.command(name="subcount")
     async def subcount(self, ctx):
-        url = f"https://api.twitch.tv/helix/subscriptions?broadcaster_id=87252610"
-        headers = {"Client-ID": secrets.twitch_api_key}
+        url = "https://api.twitch.tv/kraken/channels/87252610/subscriptions"
+        headers = {"Accept": "application/vnd.twitchtv.v5+json", "Client-ID": secrets.client_id,
+                   "Authorization": f"OAuth {secrets.irc_old_api}"}
         sub_request = requests.get(url, headers=headers)
-        print(sub_request.content)
+        subs = sub_request.json()
+        await ctx.send(f"/me Moehre hat schon {subs['_total']} Subs! | {ctx.author.name}")
