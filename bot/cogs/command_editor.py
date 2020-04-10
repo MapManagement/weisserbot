@@ -128,18 +128,17 @@ class CommandEditor:
     @commands.command(name="followage")
     async def followage(self, ctx):
         user_id = ctx.message.author.id
-        url = f"https://api.twitch.tv/helix/users/follows?from_id={str(user_id)}"
-        headers = {'Client-ID': secrets.twitch_api_key}
+        url = f"https://api.twitch.tv/kraken/users/{str(user_id)}/follows/channels/87252610"
+        headers = {'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': secrets.twitch_api_key}
         follow_request = requests.get(url, headers=headers)
         follow = follow_request.json()
-        for streamers in follow["data"]:
-            if streamers["to_id"] == "87252610":
-                followed_at = streamers["followed_at"]
-                con_followed_at = datetime.datetime.strptime(followed_at, "%Y-%m-%dT%H:%M:%SZ")
-                follow_time = datetime.datetime.now() - con_followed_at
-                total_seconds = follow_time.total_seconds()
-                days = total_seconds / 86400
-                await ctx.send(f"/me Du folgst Moehre schon ~{round(days, 2)} Tage. | {ctx.author.name}")
+        followed_at = follow["created_at"]
+        con_followed_at = datetime.datetime.strptime(followed_at, "%Y-%m-%dT%H:%M:%SZ")
+        follow_time = datetime.datetime.now() - con_followed_at
+        total_seconds = follow_time.total_seconds()
+        days = total_seconds / 86400
+        print(days)
+        await ctx.send(f"/me Du folgst Moehre schon ~{round(days, 2)} Tage. | {ctx.author.name}")
 
     @commands.command(name="subcount")
     async def subcount(self, ctx):
