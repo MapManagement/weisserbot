@@ -205,7 +205,7 @@
             "pyfile": "social_media"
         },
         "commands": {
-            "content": "Derzeit noch in Bearbeitung!",
+            "content": "Vorläufig: https://github.com/MapManagement/weisserbot/blob/master/bot/cogs/command_library.json",
             "pyfile": "viewer_info"
         }
     }
