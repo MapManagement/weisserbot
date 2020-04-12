@@ -25,10 +25,10 @@ class WatchTime:
     @commands.command(name="watchtime")
     async def send_watchtime(self, ctx):
         user_name = ctx.message.author.name
-        existence_check = cursor().execute("SELECT EXISTS (SELECT Name FROM user WHERE Name = %(user_name)s)",
+        existence_check = cursor().execute("SELECT EXISTS (SELECT name FROM users WHERE name = %(user_name)s)",
                                            {"user_name": str(user_name)}).fetchone()
         if existence_check[0]:
-            user_watchtime = cursor().execute(f"SELECT Hours FROM user WHERE Name = %(user_name)s",
+            user_watchtime = cursor().execute(f"SELECT minutes FROM users WHERE name = %(user_name)s",
                                               {"user_name": str(user_name)}).fetchone()[0]
             await ctx.send(f"/me You already watched {round(user_watchtime/60, 2)} hours!" + f" | {ctx.message.author.name}")
         else:
@@ -60,11 +60,11 @@ class WatchTime:
             users = command_editor.read_json("utils/temp_watchtime.json")
             command_editor.write_json("utils/temp_watchtime.json", "{'users':{}}")
             for user in users["users"]:
-                existence_check = cursor().execute(f"SELECT EXISTS (SELECT Name FROM user WHERE Name = %(chatter_name)s)",
+                existence_check = cursor().execute(f"SELECT EXISTS (SELECT name FROM users WHERE name = %(chatter_name)s)",
                                                    {"chatter_name": str(user)}).fetchone()
                 if existence_check[0]:
-                    cursor().execute(f"UPDATE user SET Hours = Hours + 12 WHERE Name = %(chatter_name)s",
+                    cursor().execute(f"UPDATE users SET minutes = minutes + 12 WHERE name = %(chatter_name)s",
                                      {"chatter_name": str(user)})
                 else:
-                    cursor().execute(f"INSERT INTO user (Name, Hours) VALUES (%(chatter_name)s, 12)",
+                    cursor().execute(f"INSERT INTO users (name, minutes) VALUES (%(chatter_name)s, 12)",
                                      {"chatter_name": str(user)})
