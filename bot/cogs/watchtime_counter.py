@@ -58,7 +58,7 @@ class WatchTime:
         while True:
             await asyncio.sleep(3600)
             users = command_editor.read_json("utils/temp_watchtime.json")
-            command_editor.write_json("utils/temp_watchtime.json", "{'users':{}}")
+            command_editor.write_json("utils/temp_watchtime.json", users)
             for user in users["users"]:
                 existence_check = cursor().execute(f"SELECT EXISTS (SELECT name FROM users WHERE name = %(chatter_name)s)",
                                                    {"chatter_name": str(user)}).fetchone()
