@@ -66,7 +66,7 @@ def delete_command(name: str):
     try:
         python_file = data["commands"][name]["pyfile"]
         del data["commands"][name]
-        write_json("command_library.json", data)
+        write_json(f"{lib_path}command_library.json", data)
         eraser = False
 
         with open(f"cogs/{python_file}.py", "r") as pyfile_read:
@@ -98,24 +98,24 @@ class CommandEditor:
     async def new_command(self, ctx, name: str, *, content: str):
         if await checks.is_mod(ctx):
             result = create_command(name, content)
-            self.bot.unload_module("bot.cogs.custom_commands")
-            self.bot.load_module("bot.cogs.custom_commands")
+            self.bot.unload_module("cogs.custom_commands")
+            self.bot.load_module("cogs.custom_commands")
             await ctx.send(result)
 
     @commands.command(name="del_cmd")
     async def delete_command(self, ctx, name: str):
         if await checks.is_mod(ctx):
             result = delete_command(name)
-            self.bot.unload_module(f"bot.cogs.{result[1]}")
-            self.bot.load_module(f"bot.cogs.{result[1]}")
+            self.bot.unload_module(f"cogs.{result[1]}")
+            self.bot.load_module(f"cogs.{result[1]}")
             await ctx.send(result[0])
 
     @commands.command(name="edit_cmd")
     async def update_command(self, ctx, name: str, *, content: str):
         if not await checks.is_mod(ctx):
             result = edit_command(name, content)
-            self.bot.unload_module(f"bot.cogs.{result[1]}")
-            self.bot.load_module(f"bot.cogs.{result[1]}")
+            self.bot.unload_module(f"cogs.{result[1]}")
+            self.bot.load_module(f"cogs.{result[1]}")
             await ctx.send(result[0])
 
     @commands.command(name="reload_mod")
