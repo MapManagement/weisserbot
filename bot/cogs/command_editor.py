@@ -112,17 +112,17 @@ class CommandEditor:
 
     @commands.command(name="edit_cmd")
     async def update_command(self, ctx, name: str, *, content: str):
-        if not await checks.is_mod(ctx):
+        if await checks.is_mod(ctx):
             result = edit_command(name, content)
-            self.bot.unload_module(f"cogs.{result[1]}")
-            self.bot.load_module(f"cogs.{result[1]}")
+            self.bot.unload_module(f"bot.cogs.{result[1]}")
+            self.bot.load_module(f"bot.cogs.{result[1]}")
             await ctx.send(result[0])
 
     @commands.command(name="reload_mod")
     async def reload_mod(self, ctx, module_name: str):
         if await checks.is_mod(ctx) or ctx.author.id == 151631704:
-            self.bot.unload_module(module_name)
-            self.bot.load_module(module_name)
+            self.bot.unload_module(f"cogs.{module_name}")
+            self.bot.load_module(f"cogs.{module_name}")
             await ctx.send("/me Success!")
 
     @commands.command(name="followage")
