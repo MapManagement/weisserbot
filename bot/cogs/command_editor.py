@@ -1,12 +1,8 @@
 import requests
-import datetime
-import os
 import sqlalchemy
 import datetime
 from bot.utils import checks, secrets
 from twitchio.ext import commands
-
-lib_path = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__))) + os.sep
 
 blacklisted_commands = ["new_command", "new_cmd", "delete_cmd", "del_cmd", "update_command", "edit_cmd"
                         "reload_mod", "followage", "subcount", "test", "watchtime", "send_watchtime"]
@@ -51,7 +47,12 @@ def edit_command(name: str, content: str):
 
 
 def delete_command(name: str):
-    pass
+    if command_exists(name):
+        cursor().execute("DELETE FROM commands WHERE name = %(command_name)s",
+                         {"command_name": str(name)})
+        return f"Deleted command named '{name}'!"
+    else:
+        return f"There is no command named '{name}'!"
 
 
 @commands.cog()
@@ -71,22 +72,13 @@ class CommandEditor:
     async def delete_command(self, ctx, name: str):
         if await checks.is_mod(ctx):
             result = delete_command(name)
-            self.bot.unload_module(f"cogs.{result[1]}")
-            self.bot.load_module(f"cogs.{result[1]}")
-            await ctx.send(result[0])
+            await ctx.send(result)
 
     @commands.command(name="edit_cmd")
     async def update_command(self, ctx, name: str, *, content: str):
         if await checks.is_mod(ctx):
             result = edit_command(name, content)
             await ctx.send(result)
-
-    @commands.command(name="reload_mod")
-    async def reload_mod(self, ctx, module_name: str):
-        if await checks.is_mod(ctx) or ctx.author.id == 151631704:
-            self.bot.unload_module(f"cogs.{module_name}")
-            self.bot.load_module(f"cogs.{module_name}")
-            await ctx.send("/me Success!")
 
     @commands.command(name="followage")
     async def followage(self, ctx):
