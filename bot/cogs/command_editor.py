@@ -1,14 +1,26 @@
-from twitchio.ext import commands
 import json
 import requests
 import datetime
 import os
+import sqlalchemy
+import datetime
 from bot.utils import checks, secrets
+from twitchio.ext import commands
 
 lib_path = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__))) + os.sep
 
 blacklisted_commands = ["new_command", "new_cmd", "delete_cmd", "del_cmd", "update_command", "edit_cmd"
                         "reload_mod", "followage", "subcount", "test", "watchtime", "send_watchtime"]
+
+
+def create_db_connection():
+    url = secrets.db_login
+    connector = sqlalchemy.create_engine(url)
+    return connector
+
+
+def cursor():
+    return create_db_connection()
 
 
 def read_json(file):
@@ -22,31 +34,20 @@ def write_json(file, data):
         json.dump(data, json_file, indent=4)
 
 
-def create_command(name: str, content: str):
-    if not name in blacklisted_commands:
-        blueprint_json = {"content": content, "pyfile": "social_media"}
-        data = read_json(f"{lib_path}command_library.json")
-        try:
-            check_for_existence = data["commands"][name]
-            return "/me Command exists already!"
-        except KeyError:
-            data["commands"][name] = blueprint_json
-            data["commands"][name]["content"] = content
-            data["commands"][name]["pyfile"] = "custom_commands"
-            write_json(f"{lib_path}command_library.json", data)
-
-            blueprint_cmd = \
-                f"""
-    @commands.command(name="{name}")
-    async def {name}(self, ctx):
-        await ctx.send(self.data['{name}']['content'] + f' | {{ctx.message.author.name}}')\n
-                """
-            with open("cogs/custom_commands.py", "a") as cmd_file:
-                cmd_file.write(blueprint_cmd)
-                cmd_file.close()
-            return f"/me Added command '{name}'!"
+def create_command(name: str, content: str, creator: str):
+    existence_check = cursor().execute("SELECT EXISTS (SELECT name FROM commands WHERE name = %(command_name)s)",
+                                       {"command_name": str(name)}).fetchone()
+    print(existence_check)
+    if not existence_check[0]:
+        date = datetime.datetime.today().strftime("%Y-%m-%d")
+        print(date)
+        cursor().execute(f"INSERT INTO commands (name, content, created_at, creator) VALUES "
+                         f"(%(command_name)s, %(command_content)s, %(created_at)s, %(creator)s)",
+                         {"command_name": str(name), "command_content": str(content),
+                          "created_at": date, "creator": creator})
+        return f"Created command named '{name}'!"
     else:
-        return "/me Command exists already!"
+        return f"There is already a command named '{name}'!"
 
 
 def edit_command(name: str, content: str):
@@ -97,9 +98,8 @@ class CommandEditor:
     @commands.command(name="new_cmd")
     async def new_command(self, ctx, name: str, *, content: str):
         if await checks.is_mod(ctx):
-            result = create_command(name, content)
-            self.bot.unload_module("cogs.custom_commands")
-            self.bot.load_module("cogs.custom_commands")
+            author = ctx.author.name
+            result = create_command(name, content, author)
             await ctx.send(result)
 
     @commands.command(name="del_cmd")
