@@ -1,4 +1,3 @@
-import json
 import requests
 import datetime
 import os
@@ -23,22 +22,14 @@ def cursor():
     return create_db_connection()
 
 
-def read_json(file):
-    with open(file, "r", encoding="utf8") as json_file:
-        data = json.load(json_file)
-        return data
-
-
-def write_json(file, data):
-    with open(file, "w") as json_file:
-        json.dump(data, json_file, indent=4)
+def command_exists(name: str):
+    existence_check = cursor().execute("SELECT EXISTS (SELECT name FROM commands WHERE name = %(command_name)s)",
+                                       {"command_name": str(name)}).fetchone()
+    return existence_check[0]
 
 
 def create_command(name: str, content: str, creator: str):
-    existence_check = cursor().execute("SELECT EXISTS (SELECT name FROM commands WHERE name = %(command_name)s)",
-                                       {"command_name": str(name)}).fetchone()
-    print(existence_check)
-    if not existence_check[0]:
+    if not command_exists(name):
         date = datetime.datetime.today().strftime("%Y-%m-%d")
         print(date)
         cursor().execute(f"INSERT INTO commands (name, content, created_at, creator) VALUES "
@@ -51,42 +42,16 @@ def create_command(name: str, content: str, creator: str):
 
 
 def edit_command(name: str, content: str):
-    data = read_json(f"{lib_path}command_library.json")
-    try:
-        check_for_existence = data["commands"][name]
-        data["commands"][name]["content"] = content
-        write_json(f"{lib_path}command_library.json", data)
-        return f"/me Edited command named '{name}'!", data["commands"][name]["pyfile"]
-    except KeyError:
-        return f"/me Couldn't find any command named '{name}'!", data["commands"][name]["pyfile"]
+    if command_exists(name):
+        cursor().execute(f"UPDATE commands SET content = %(command_content)s WHERE name = %(command_name)s",
+                         {"command_content": str(content), "command_name": str(name)})
+        return f"Edited command named '{name}'!"
+    else:
+        return f"There is no command named '{name}'!"
 
 
 def delete_command(name: str):
-    data = read_json(f"{lib_path}command_library.json")
-    pyfile = data["commands"][name]["pyfile"]
-    try:
-        python_file = data["commands"][name]["pyfile"]
-        del data["commands"][name]
-        write_json(f"{lib_path}command_library.json", data)
-        eraser = False
-
-        with open(f"cogs/{python_file}.py", "r") as pyfile_read:
-            lines = pyfile_read.readlines()
-            with open(f"cogs/{python_file}.py", "w") as pyfile_write:
-                for line in lines:
-                    if eraser:
-                        if line.endswith('")\n'):
-                            eraser = False
-                    else:
-                        if f'    @commands.command(name="{name}")' in line:
-                            eraser = True
-                        else:
-                            pyfile_write.write(line)
-                pyfile_read.close()
-                pyfile_write.close()
-                return f"/me Deleted command named '{name}'!", pyfile
-    except KeyError:
-        return f"/me Couldn't find any command named '{name}'!", pyfile
+    pass
 
 
 @commands.cog()
@@ -114,9 +79,7 @@ class CommandEditor:
     async def update_command(self, ctx, name: str, *, content: str):
         if await checks.is_mod(ctx):
             result = edit_command(name, content)
-            self.bot.unload_module(f"bot.cogs.{result[1]}")
-            self.bot.load_module(f"bot.cogs.{result[1]}")
-            await ctx.send(result[0])
+            await ctx.send(result)
 
     @commands.command(name="reload_mod")
     async def reload_mod(self, ctx, module_name: str):
