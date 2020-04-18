@@ -27,32 +27,44 @@ def command_exists(name: str):
 def create_command(name: str, content: str, creator: str):
     if not command_exists(name):
         date = datetime.datetime.today().strftime("%Y-%m-%d")
-        print(date)
-        cursor().execute(f"INSERT INTO commands (name, content, created_at, creator) VALUES "
-                         f"(%(command_name)s, %(command_content)s, %(created_at)s, %(creator)s)",
+        cursor().execute(f"INSERT INTO commands (name, content, created_at, creator, disabled) VALUES "
+                         f"(%(command_name)s, %(command_content)s, %(created_at)s, %(creator)s, %(disabled)s)",
                          {"command_name": name, "command_content": content,
-                          "created_at": date, "creator": creator})
-        return f"Created command named '{name}'!"
+                          "created_at": date, "creator": creator, "disabled": 0})
+        return f"/me Created command named '{name}'!"
     else:
-        return f"There is already a command named '{name}'!"
+        return f"/me There is already a command named '{name}'!"
 
 
 def edit_command(name: str, content: str):
     if command_exists(name):
         cursor().execute(f"UPDATE commands SET content = %(command_content)s WHERE name = %(command_name)s",
                          {"command_content": content, "command_name": name})
-        return f"Edited command named '{name}'!"
+        return f"/me Edited command named '{name}'!"
     else:
-        return f"There is no command named '{name}'!"
+        return f"/me There is no command named '{name}'!"
 
 
 def delete_command(name: str):
     if command_exists(name):
         cursor().execute("DELETE FROM commands WHERE name = %(command_name)s",
                          {"command_name": name})
-        return f"Deleted command named '{name}'!"
+        return f"/me Deleted command named '{name}'!"
     else:
-        return f"There is no command named '{name}'!"
+        return f"/me There is no command named '{name}'!"
+
+
+def set_command_state(name: str, state: str):
+    if state == "on" or state == "off":
+        if command_exists(name):
+            states = {"on": 0, "off": 1}
+            cursor().execute(f"UPDATE commands SET disabled = %(command_state)s WHERE name = %(command_name)s",
+                             {"command_state": states[state], "command_name": name})
+            return f"/me Turned command name '{name}' {state}!"
+        else:
+            return f"/me There is no command named '{name}'!"
+    else:
+        return "/me Use 'on' for activating or 'off' for deactivating a command!"
 
 
 @commands.cog()
@@ -78,6 +90,12 @@ class CommandEditor:
     async def update_command(self, ctx, name: str, *, content: str):
         if await checks.is_mod(ctx):
             result = edit_command(name, content)
+            await ctx.send(result)
+
+    @commands.command(name="turn_cmd")
+    async def set_command_state(self, ctx, name: str, state: str):
+        if await checks.is_mod(ctx):
+            result = set_command_state(name, state)
             await ctx.send(result)
 
     @commands.command(name="followage")
