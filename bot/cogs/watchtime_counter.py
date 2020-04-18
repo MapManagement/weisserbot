@@ -26,10 +26,10 @@ class WatchTime:
     async def send_watchtime(self, ctx):
         user_name = ctx.message.author.name
         existence_check = cursor().execute("SELECT EXISTS (SELECT name FROM users WHERE name = %(user_name)s)",
-                                           {"user_name": str(user_name)}).fetchone()
+                                           {"user_name": user_name}).fetchone()
         if existence_check[0]:
             user_watchtime = cursor().execute(f"SELECT minutes FROM users WHERE name = %(user_name)s",
-                                              {"user_name": str(user_name)}).fetchone()[0]
+                                              {"user_name": user_name}).fetchone()[0]
             await ctx.send(f"/me You already watched {round(user_watchtime/60, 2)} hours!" + f" | {ctx.message.author.name}")
         else:
             await ctx.send(f"/me Sorry, couldn't find any data for {str(user_name)}!")
@@ -62,10 +62,10 @@ class WatchTime:
             command_editor.write_json("utils/temp_watchtime.json", cleared_json)
             for user in users["users"]:
                 existence_check = cursor().execute(f"SELECT EXISTS (SELECT name FROM users WHERE name = %(chatter_name)s)",
-                                                   {"chatter_name": str(user)}).fetchone()
+                                                   {"chatter_name": user}).fetchone()
                 if existence_check[0]:
                     cursor().execute(f"UPDATE users SET minutes = minutes + 12 WHERE name = %(chatter_name)s",
-                                     {"chatter_name": str(user)})
+                                     {"chatter_name": user})
                 else:
                     cursor().execute(f"INSERT INTO users (name, minutes) VALUES (%(chatter_name)s, 12)",
-                                     {"chatter_name": str(user)})
+                                     {"chatter_name": user})
