@@ -20,7 +20,7 @@ def cursor():
 
 def command_exists(name: str):
     existence_check = cursor().execute("SELECT EXISTS (SELECT name FROM commands WHERE name = %(command_name)s)",
-                                       {"command_name": str(name)}).fetchone()
+                                       {"command_name": name}).fetchone()
     return existence_check[0]
 
 
@@ -30,7 +30,7 @@ def create_command(name: str, content: str, creator: str):
         print(date)
         cursor().execute(f"INSERT INTO commands (name, content, created_at, creator) VALUES "
                          f"(%(command_name)s, %(command_content)s, %(created_at)s, %(creator)s)",
-                         {"command_name": str(name), "command_content": str(content),
+                         {"command_name": name, "command_content": content,
                           "created_at": date, "creator": creator})
         return f"Created command named '{name}'!"
     else:
@@ -40,7 +40,7 @@ def create_command(name: str, content: str, creator: str):
 def edit_command(name: str, content: str):
     if command_exists(name):
         cursor().execute(f"UPDATE commands SET content = %(command_content)s WHERE name = %(command_name)s",
-                         {"command_content": str(content), "command_name": str(name)})
+                         {"command_content": content, "command_name": name})
         return f"Edited command named '{name}'!"
     else:
         return f"There is no command named '{name}'!"
@@ -49,7 +49,7 @@ def edit_command(name: str, content: str):
 def delete_command(name: str):
     if command_exists(name):
         cursor().execute("DELETE FROM commands WHERE name = %(command_name)s",
-                         {"command_name": str(name)})
+                         {"command_name": name})
         return f"Deleted command named '{name}'!"
     else:
         return f"There is no command named '{name}'!"
