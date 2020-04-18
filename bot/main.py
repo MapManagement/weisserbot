@@ -47,9 +47,7 @@ class Bot(commands.Bot):
             await channel.send("/me Instagram: https://www.instagram.com/weissemoehre/?hl=de")
 
     def load_cogs(self):
-        extensions = ["bot.cogs.social_media", "bot.cogs.custom_commands", "bot.cogs.gear", "bot.cogs.rl_information",
-                      "bot.cogs.software", "bot.cogs.viewer_info", "bot.cogs.command_editor",
-                      "bot.cogs.watchtime_counter"]
+        extensions = ["bot.cogs.command_handler"]
         for extension in extensions:
             Bot.load_module(self, name=extension)
 
