@@ -55,10 +55,10 @@ def delete_command(name: str):
 
 
 def set_command_state(name: str, state: str):
-    if state == "on" or state == "off":
+    states = {"on": 0, "off": 1}
+    if state in states.keys():
         if command_exists(name):
-            states = {"on": 0, "off": 1}
-            cursor().execute(f"UPDATE commands SET disabled = %(command_state)s WHERE name = %(command_name)s",
+            cursor().execute(f"UPDATE commands SET disabled = %(command_state)d WHERE name = %(command_name)s",
                              {"command_state": states[state], "command_name": name})
             return f"/me Turned command name '{name}' {state}!"
         else:
