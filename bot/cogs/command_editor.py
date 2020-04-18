@@ -4,8 +4,8 @@ import datetime
 from bot.utils import checks, secrets
 from twitchio.ext import commands
 
-blacklisted_commands = ["new_command", "new_cmd", "delete_cmd", "del_cmd", "update_command", "edit_cmd"
-                        "reload_mod", "followage", "subcount", "test", "watchtime", "send_watchtime"]
+blacklisted_commands = ["new_cmd", "del_cmd", "edit_cmd", "turn_cmd", "followage", "subcount",
+                        "test", "watchtime"]
 
 
 def create_db_connection():
@@ -25,7 +25,7 @@ def command_exists(name: str):
 
 
 def create_command(name: str, content: str, creator: str):
-    if not command_exists(name):
+    if not command_exists(name) and name not in blacklisted_commands:
         date = datetime.datetime.today().strftime("%Y-%m-%d")
         cursor().execute(f"INSERT INTO commands (name, content, created_at, creator, disabled) VALUES "
                          f"(%(command_name)s, %(command_content)s, %(created_at)s, %(creator)s, %(disabled)s)",
@@ -58,7 +58,7 @@ def set_command_state(name: str, state: str):
     states = {"on": 0, "off": 1}
     if state in states.keys():
         if command_exists(name):
-            cursor().execute(f"UPDATE commands SET disabled = %(command_state)d WHERE name = %(command_name)s",
+            cursor().execute(f"UPDATE commands SET disabled = %(command_state)s WHERE name = %(command_name)s",
                              {"command_state": states[state], "command_name": name})
             return f"/me Turned command name '{name}' {state}!"
         else:
