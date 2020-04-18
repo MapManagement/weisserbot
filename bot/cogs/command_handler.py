@@ -40,7 +40,4 @@ class CommandHandler:
     def is_command_disabled(self, name: str):
         result = cursor().execute("SELECT disabled FROM commands WHERE name = %(command_name)s",
                                   {"command_name": name}).fetchone()
-        if result is None or result[0] == 1:
-            return True
-        else:
-            return False
+        return result is None or result[0] == 1
