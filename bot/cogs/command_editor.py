@@ -24,24 +24,24 @@ def command_exists(name: str):
     return existence_check[0]
 
 
-def create_command(name: str, content: str, creator: str):
+def create_command(name: str, content: str, editor: str):
     if not command_exists(name) and name not in blacklisted_commands:
         date = datetime.datetime.today().strftime("%Y-%m-%d")
-        cursor().execute(f"INSERT INTO commands (name, content, created_at, creator, disabled) VALUES "
-                         f"(%(command_name)s, %(command_content)s, %(created_at)s, %(creator)s, %(disabled)s)",
+        cursor().execute(f"INSERT INTO commands (name, content, edited_at, editor, disabled) VALUES "
+                         f"(%(command_name)s, %(command_content)s, %(edited_at)s, %(editor)s, %(disabled)s)",
                          {"command_name": name, "command_content": content,
-                          "created_at": date, "creator": creator, "disabled": 0})
+                          "edited_at": date, "editor": editor, "disabled": 0})
         return f"/me Created command named '{name}'!"
     else:
         return f"/me There is already a command named '{name}'!"
 
 
-def edit_command(name: str, content: str, creator: str):
+def edit_command(name: str, content: str, editor: str):
     if command_exists(name):
         date = datetime.datetime.today().strftime("%Y-%m-%d")
-        cursor().execute(f"UPDATE commands SET content = %(command_content)s, creator = %(command_editor)s, "
-                         f"created_at = %(command_date)s WHERE name = %(command_name)s",
-                         {"command_content": content, "command_editor": creator,
+        cursor().execute(f"UPDATE commands SET content = %(command_content)s, editor = %(command_editor)s, "
+                         f"edited_at = %(command_date)s WHERE name = %(command_name)s",
+                         {"command_content": content, "command_editor": editor,
                           "command_date": date, "command_name": name})
         return f"/me Edited command named '{name}'!"
     else:
@@ -109,7 +109,7 @@ class CommandEditor:
         headers = {'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': secrets.twitch_api_key}
         follow_request = requests.get(url, headers=headers)
         follow = follow_request.json()
-        followed_at = follow["created_at"]
+        followed_at = follow["edited_at"]
         con_followed_at = datetime.datetime.strptime(followed_at, "%Y-%m-%dT%H:%M:%SZ")
         follow_time = datetime.datetime.now() - con_followed_at
         total_seconds = follow_time.total_seconds()
