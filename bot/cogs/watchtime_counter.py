@@ -1,9 +1,20 @@
 from twitchio.ext import commands
 from bot.utils import secrets
-from bot.cogs import command_editor
 import sqlalchemy
 import asyncio
 import requests
+import json
+
+
+def write_json(file, data):
+    with open(file, "w") as json_file:
+        json.dump(data, json_file, indent=4)
+
+
+def read_json(file):
+    with open(file, "r", encoding="utf8") as json_file:
+        data = json.load(json_file)
+        return data
 
 
 def create_db_connection():
@@ -47,19 +58,19 @@ class WatchTime:
                 chatters = chatters_data["chatters"]
                 for section in chatters.values():
                     for chatter in section:
-                        users = command_editor.read_json("utils/temp_watchtime.json")
+                        users = read_json("utils/temp_watchtime.json")
                         if chatter in users["users"]:
                             users["users"][str(chatter)] += 12
                         else:
                             users["users"][str(chatter)] = 12
-                        command_editor.write_json("utils/temp_watchtime.json", users)
+                        write_json("utils/temp_watchtime.json", users)
 
     async def temp_watchtime_to_db(self):
         while True:
             await asyncio.sleep(3600)
-            users = command_editor.read_json("utils/temp_watchtime.json")
+            users = read_json("utils/temp_watchtime.json")
             cleared_json = {"users": {}}
-            command_editor.write_json("utils/temp_watchtime.json", cleared_json)
+            write_json("utils/temp_watchtime.json", cleared_json)
             for user in users["users"]:
                 existence_check = cursor().execute(f"SELECT EXISTS (SELECT name FROM users WHERE name = %(chatter_name)s)",
                                                    {"chatter_name": user}).fetchone()
