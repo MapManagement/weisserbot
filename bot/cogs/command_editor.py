@@ -36,10 +36,13 @@ def create_command(name: str, content: str, creator: str):
         return f"/me There is already a command named '{name}'!"
 
 
-def edit_command(name: str, content: str):
+def edit_command(name: str, content: str, creator: str):
     if command_exists(name):
-        cursor().execute(f"UPDATE commands SET content = %(command_content)s WHERE name = %(command_name)s",
-                         {"command_content": content, "command_name": name})
+        date = datetime.datetime.today().strftime("%Y-%m-%d")
+        cursor().execute(f"UPDATE commands SET content = %(command_content)s, creator = %(command_editor)s, "
+                         f"created_at = %(command_date)s WHERE name = %(command_name)s",
+                         {"command_content": content, "command_editor": creator,
+                          "command_date": date, "command_name": name})
         return f"/me Edited command named '{name}'!"
     else:
         return f"/me There is no command named '{name}'!"
@@ -89,7 +92,8 @@ class CommandEditor:
     @commands.command(name="edit_cmd")
     async def update_command(self, ctx, name: str, *, content: str):
         if await checks.is_mod(ctx):
-            result = edit_command(name, content)
+            author = ctx.author.name
+            result = edit_command(name, content, author)
             await ctx.send(result)
 
     @commands.command(name="turn_cmd")
