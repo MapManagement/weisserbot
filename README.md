@@ -30,6 +30,6 @@ Future
 - [x] implementing MySQL databases for watchtime and other stuff
 - [x] finishing sub count command
 - [x] finding a solution for problems with followage command
-- [ ] replacing json file with database and message_handler
-- [ ] function for adding /me at the start of each bot message
-- [ ] consistent usage of ONE way to declare paths
+- [x] replacing json file with database and message_handler
+- [x] function for adding /me at the start of each bot message
+- [x] consistent usage of ONE way to declare paths
