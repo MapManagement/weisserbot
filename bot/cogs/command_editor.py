@@ -109,12 +109,11 @@ class CommandEditor:
         headers = {'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': secrets.twitch_api_key}
         follow_request = requests.get(url, headers=headers)
         follow = follow_request.json()
-        followed_at = follow["edited_at"]
+        followed_at = follow["created_at"]
         con_followed_at = datetime.datetime.strptime(followed_at, "%Y-%m-%dT%H:%M:%SZ")
         follow_time = datetime.datetime.now() - con_followed_at
         total_seconds = follow_time.total_seconds()
         days = total_seconds / 86400
-        print(days)
         await ctx.send(f"/me Du folgst Moehre schon ~{round(days, 2)} Tage. | {ctx.author.name}")
 
     @commands.command(name="subcount")
