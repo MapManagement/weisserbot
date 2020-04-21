@@ -33,3 +33,5 @@ Future
 - [x] replacing json file with database and message_handler
 - [x] function for adding /me at the start of each bot message
 - [x] consistent usage of ONE way to declare paths
+- [ ] catching CommandNotFound error
+- [ ] expand README with better instructions and explanations

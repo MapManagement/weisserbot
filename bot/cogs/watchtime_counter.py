@@ -41,7 +41,8 @@ class WatchTime:
         if existence_check[0]:
             user_watchtime = cursor().execute(f"SELECT minutes FROM users WHERE name = %(user_name)s",
                                               {"user_name": user_name}).fetchone()[0]
-            await ctx.send(f"/me You already watched {round(user_watchtime/60, 2)} hours!" + f" | {ctx.message.author.name}")
+            await ctx.send(
+                f"/me You already watched {round(user_watchtime / 60, 2)} hours!" + f" | {ctx.message.author.name}")
         else:
             await ctx.send(f"/me Sorry, couldn't find any data for {str(user_name)}!")
 
@@ -72,8 +73,9 @@ class WatchTime:
             cleared_json = {"users": {}}
             write_json("utils/temp_watchtime.json", cleared_json)
             for user in users["users"]:
-                existence_check = cursor().execute(f"SELECT EXISTS (SELECT name FROM users WHERE name = %(chatter_name)s)",
-                                                   {"chatter_name": user}).fetchone()
+                existence_check = cursor().execute \
+                    (f"SELECT EXISTS (SELECT name FROM users WHERE name = %(chatter_name)s)",
+                     {"chatter_name": user}).fetchone()
                 if existence_check[0]:
                     cursor().execute(f"UPDATE users SET minutes = minutes + 12 WHERE name = %(chatter_name)s",
                                      {"chatter_name": user})
