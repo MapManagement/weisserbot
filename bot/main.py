@@ -12,6 +12,10 @@ class Bot(commands.Bot):
         self._loop = asyncio.get_event_loop()
         self.load_cogs()
 
+    @commands.command(name="test")
+    async def test(self, ctx):
+        await ctx.send("Hello" + f" | {ctx.message.author.name}")
+
     async def event_ready(self):
         print(f"Logging in as {self.nick}. Joining {self.initial_channels[0]}'s chat.\n"
               "Ready to work!\n"
@@ -27,11 +31,7 @@ class Bot(commands.Bot):
         channel = metadata.channel
         user_name = metadata.user.name
         months = metadata.cumulative_months
-        await channel.send(f"/me Vielen Dank für deinen Sub im {months}. Monat, {user_name}!")
-
-    @commands.command(name="test")
-    async def test(self, ctx):
-        await ctx.send("Hello" + f" | {ctx.message.author.name}")
+        await channel.send(f"/me Vielen Dank für deinen Sub im {months}. Monat, @{user_name}!")
 
     async def twitter_cycler(self):
         channel = Bot.get_channel(self, "WeisseMoehre")
@@ -47,7 +47,7 @@ class Bot(commands.Bot):
             await channel.send("/me Instagram: https://www.instagram.com/weissemoehre/?hl=de")
 
     def load_cogs(self):
-        extensions = ["bot.cogs.command_handler", "bot.cogs.command_editor"]
+        extensions = ["bot.cogs.command_handler", "bot.cogs.command_editor", "bot.cogs.watchtime_counter"]
         for extension in extensions:
             Bot.load_module(self, name=extension)
 

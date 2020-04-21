@@ -1,4 +1,3 @@
-from twitchio.ext import commands
 
 
 async def is_mod(ctx):
