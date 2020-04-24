@@ -5,7 +5,7 @@ from bot.utils import checks, secrets
 from twitchio.ext import commands
 
 blacklisted_commands = ["new_cmd", "del_cmd", "edit_cmd", "turn_cmd", "followage", "subcount",
-                        "test", "watchtime"]
+                        "test", "watchtime", "uptime"]
 
 
 def create_db_connection():
@@ -124,3 +124,25 @@ class CommandEditor:
         sub_request = requests.get(url, headers=headers)
         subs = sub_request.json()
         await ctx.send(f"/me Moehre hat schon {subs['_total']} Subs! | {ctx.author.name}")
+
+    @commands.command(name="uptime")
+    async def uptime(self, ctx):
+        url = "https://api.twitch.tv/kraken/streams/87252610"
+        headers = {'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': secrets.twitch_api_key}
+        stream_request = requests.get(url, headers=headers)
+        stream = stream_request.json()["stream"]
+
+        if stream is not None:
+            datetime_now = datetime.datetime.now()
+            stream_started_at = datetime.datetime.strptime(stream["created_at"], "%Y-%m-%dT%H:%M:%SZ")
+            raw_uptime = datetime_now - stream_started_at - datetime.timedelta(hours=2)
+            total_seconds = raw_uptime.total_seconds()
+            days = int(total_seconds // 86400)
+            hours = int((total_seconds % 86400) // 3600)
+            minutes = int(((total_seconds % 86400) % 3600) // 60)
+            seconds = int(total_seconds % 60)
+            uptime = f"{days} Tagen, {hours} Stunden, {minutes}" \
+                     f" Minuten, {seconds} Sekunden"
+            await ctx.send(f"/me Moehre ist schon seit {uptime} online | {ctx.author.name}")
+        else:
+            await ctx.send(f"/me Moehre ist derzeit offline | {ctx.author.name}")
