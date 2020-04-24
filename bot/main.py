@@ -14,7 +14,7 @@ class Bot(commands.Bot):
 
     @commands.command(name="test")
     async def test(self, ctx):
-        await ctx.send("Hello" + f" | {ctx.message.author.name}")
+        await ctx.send(f"Hello | {ctx.message.author.name}")
 
     async def event_ready(self):
         print(f"Logging in as {self.nick}. Joining {self.initial_channels[0]}'s chat.\n"
