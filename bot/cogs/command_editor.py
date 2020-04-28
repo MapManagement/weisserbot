@@ -116,7 +116,7 @@ class CommandEditor:
         days = total_seconds / 86400
         await ctx.send(f"/me Du folgst Moehre schon ~{round(days, 2)} Tage. | {ctx.author.name}")
 
-    @commands.command(name="subcount")
+    @commands.command(name="subcount", aliases=["subs"])
     async def subcount(self, ctx):
         url = "https://api.twitch.tv/kraken/channels/87252610/subscriptions"
         headers = {"Accept": "application/vnd.twitchtv.v5+json", "Client-ID": secrets.client_id,
@@ -127,14 +127,14 @@ class CommandEditor:
 
     @commands.command(name="uptime")
     async def uptime(self, ctx):
-        url = "https://api.twitch.tv/kraken/streams/87252610"
-        headers = {'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': secrets.twitch_api_key}
+        url = "https://api.twitch.tv/helix/streams?user_id=87252610"
+        headers = {'Client-ID': secrets.twitch_api_key}
         stream_request = requests.get(url, headers=headers)
-        stream = stream_request.json()["stream"]
+        stream = stream_request.json()["data"]
 
         if stream is not None:
             datetime_now = datetime.datetime.now()
-            stream_started_at = datetime.datetime.strptime(stream["created_at"], "%Y-%m-%dT%H:%M:%SZ")
+            stream_started_at = datetime.datetime.strptime(stream[0]["started_at"], "%Y-%m-%dT%H:%M:%SZ")
             raw_uptime = datetime_now - stream_started_at - datetime.timedelta(hours=2)
             total_seconds = raw_uptime.total_seconds()
             days = int(total_seconds // 86400)
