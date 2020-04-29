@@ -132,7 +132,7 @@ class CommandEditor:
         stream_request = requests.get(url, headers=headers)
         stream = stream_request.json()["data"]
 
-        if stream is not None:
+        if stream:
             datetime_now = datetime.datetime.now()
             stream_started_at = datetime.datetime.strptime(stream[0]["started_at"], "%Y-%m-%dT%H:%M:%SZ")
             raw_uptime = datetime_now - stream_started_at - datetime.timedelta(hours=2)
