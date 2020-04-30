@@ -73,12 +73,13 @@ class WatchTime:
             cleared_json = {"users": {}}
             write_json("utils/temp_watchtime.json", cleared_json)
             for user in users["users"]:
+                time = users["users"][user]
                 existence_check = cursor().execute \
                     (f"SELECT EXISTS (SELECT name FROM users WHERE name = %(chatter_name)s)",
                      {"chatter_name": user}).fetchone()
                 if existence_check[0]:
-                    cursor().execute(f"UPDATE users SET minutes = minutes + 12 WHERE name = %(chatter_name)s",
-                                     {"chatter_name": user})
+                    cursor().execute(f"UPDATE users SET minutes = minutes + %(new_watchtime)s WHERE name = %(chatter_name)s",
+                                     {"new_watchtime": time, "chatter_name": user})
                 else:
-                    cursor().execute(f"INSERT INTO users (name, minutes) VALUES (%(chatter_name)s, 12)",
-                                     {"chatter_name": user})
+                    cursor().execute(f"INSERT INTO users (name, minutes) VALUES (%(chatter_name)s, %(new_watchtime)s)",
+                                     {"new_watchtime": time, "chatter_name": user})
