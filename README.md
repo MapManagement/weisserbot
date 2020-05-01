@@ -39,7 +39,7 @@ More commands
 -------
 Since most of the commands which are created by users in the Twitch chat are not handled by my command_handler,
 I decided to edit the event_command_error function in bot.py of TwitchIO so nothing will be printed to the
-terminal when any message starts with a command prefix.
+terminal when any message starts with a command prefix and a "CommandNotFound" Error as thrown.
 
 Future
 ------
