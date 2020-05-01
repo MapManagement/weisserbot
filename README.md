@@ -34,6 +34,12 @@ More commands
     
     Sends the number of users who subscribed to the streamer
     !subcount
+    
+ CommandNotFound Error
+-------
+Since most of the commands which are created by users in the Twitch chat are not handled by my command_handler,
+I decided to edit the event_command_error function in bot.py of TwitchIO so nothing will be printed to the
+terminal when any message starts with a command prefix.
 
 Future
 ------
@@ -45,5 +51,7 @@ Future
 - [x] replacing json file with database and message_handler
 - [x] function for adding /me at the start of each bot message
 - [x] consistent usage of ONE way to declare paths
-- [ ] catching CommandNotFound error
-- [ ] expand README with better instructions and explanations
+- [x] catching CommandNotFound error
+- [x] expand README with better instructions and explanations
+- [ ] creating a Discord bot that is connected to the Twitch bot
+- [ ] working on a better way of tracking the watched time of users
