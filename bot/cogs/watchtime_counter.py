@@ -42,9 +42,9 @@ class WatchTime:
             user_watchtime = cursor().execute(f"SELECT minutes FROM users WHERE name = %(user_name)s",
                                               {"user_name": user_name}).fetchone()[0]
             await ctx.send(
-                f"/me You already watched {round(user_watchtime / 60, 2)} hours!" + f" | {ctx.message.author.name}")
+                f"/me You already watched {round(user_watchtime / 60, 2)} hours! | @{ctx.message.author.name}")
         else:
-            await ctx.send(f"/me Sorry, couldn't find any data for {str(user_name)}!")
+            await ctx.send(f"/me Sorry, couldn't find any data for {str(user_name)}! | @{ctx.message.author.name}")
 
     async def watchtime_tracker(self):
         url = f"https://api.twitch.tv/helix/streams?user_login=weissemoehre"

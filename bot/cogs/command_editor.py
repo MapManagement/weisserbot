@@ -114,7 +114,7 @@ class CommandEditor:
         follow_time = datetime.datetime.now() - con_followed_at
         total_seconds = follow_time.total_seconds()
         days = total_seconds / 86400
-        await ctx.send(f"/me Du folgst Moehre schon ~{round(days, 2)} Tage. | {ctx.author.name}")
+        await ctx.send(f"/me Du folgst Moehre schon ~{round(days, 2)} Tage. | @{ctx.author.name}")
 
     @commands.command(name="subcount", aliases=["subs"])
     async def subcount(self, ctx):
@@ -123,7 +123,7 @@ class CommandEditor:
                    "Authorization": f"OAuth {secrets.irc_old_api}"}
         sub_request = requests.get(url, headers=headers)
         subs = sub_request.json()
-        await ctx.send(f"/me Moehre hat schon {subs['_total']} Subs! | {ctx.author.name}")
+        await ctx.send(f"/me Moehre hat schon {subs['_total']} Subs! | @{ctx.author.name}")
 
     @commands.command(name="uptime")
     async def uptime(self, ctx):
@@ -143,6 +143,6 @@ class CommandEditor:
             seconds = int(total_seconds % 60)
             uptime = f"{days} Tagen, {hours} Stunden, {minutes}" \
                      f" Minuten, {seconds} Sekunden"
-            await ctx.send(f"/me Moehre ist schon seit {uptime} online | {ctx.author.name}")
+            await ctx.send(f"/me Moehre ist schon seit {uptime} online | @{ctx.author.name}")
         else:
-            await ctx.send(f"/me Moehre ist derzeit offline | {ctx.author.name}")
+            await ctx.send(f"/me Moehre ist derzeit offline | @{ctx.author.name}")
