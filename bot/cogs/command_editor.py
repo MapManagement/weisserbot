@@ -135,7 +135,7 @@ class CommandEditor:
         if stream:
             datetime_now = datetime.datetime.now()
             stream_started_at = datetime.datetime.strptime(stream[0]["started_at"], "%Y-%m-%dT%H:%M:%SZ")
-            raw_uptime = datetime_now - stream_started_at - datetime.timedelta(hours=2)
+            raw_uptime = datetime_now - stream_started_at
             total_seconds = raw_uptime.total_seconds()
             days = int(total_seconds // 86400)
             hours = int((total_seconds % 86400) // 3600)
