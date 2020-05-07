@@ -47,13 +47,14 @@ class WatchTime:
             await ctx.send(f"/me Sorry, couldn't find any data for {str(user_name)}! | @{ctx.message.author.name}")
 
     async def watchtime_tracker(self):
-        url = f"https://api.twitch.tv/helix/streams?user_login=weissemoehre"
-        headers = {'Client-ID': secrets.twitch_api_key}
+        url = f"https://api.twitch.tv/kraken/streams/87252610"
+        headers = {'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': secrets.twitch_api_key}
         streamer_request = requests.get(url, headers=headers)
         streamer_data = streamer_request.json()
+        print(streamer_data)
         while True:
             await asyncio.sleep(720)
-            if streamer_data["data"]:
+            if streamer_data["stream"] is not None:
                 chatters_request = requests.get("https://tmi.twitch.tv/group/user/weissemoehre/chatters")
                 chatters_data = chatters_request.json()
                 chatters = chatters_data["chatters"]
