@@ -51,10 +51,9 @@ class WatchTime:
         headers = {'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': secrets.twitch_api_key}
         streamer_request = requests.get(url, headers=headers)
         streamer_data = streamer_request.json()
-        print(streamer_data)
         while True:
             await asyncio.sleep(720)
-            if streamer_data["stream"] is not None:
+            if "stream" in streamer_data.keys() and streamer_data.values() is not None:
                 chatters_request = requests.get("https://tmi.twitch.tv/group/user/weissemoehre/chatters")
                 chatters_data = chatters_request.json()
                 chatters = chatters_data["chatters"]

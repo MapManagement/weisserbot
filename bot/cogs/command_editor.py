@@ -130,11 +130,11 @@ class CommandEditor:
         url = "https://api.twitch.tv/helix/streams?user_id=87252610"
         headers = {'Client-ID': secrets.twitch_api_key}
         stream_request = requests.get(url, headers=headers)
-        stream = stream_request.json()["data"]
+        stream_data = stream_request.json()
 
-        if stream:
+        if "data" in stream_data.keys() and [] not in stream_data.values():
             datetime_now = datetime.datetime.now()
-            stream_started_at = datetime.datetime.strptime(stream[0]["started_at"], "%Y-%m-%dT%H:%M:%SZ")
+            stream_started_at = datetime.datetime.strptime(stream_data["data"][0]["started_at"], "%Y-%m-%dT%H:%M:%SZ")
             raw_uptime = datetime_now - stream_started_at
             total_seconds = raw_uptime.total_seconds()
             days = int(total_seconds // 86400)
