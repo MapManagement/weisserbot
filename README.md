@@ -20,7 +20,7 @@ HowTo
     Delete command
     !del_cmd <command_name>
     
-    Enabling or disbling a commmand
+    Enabling or disabling a commmand
     state can be "on" or "off"
     !turn_cmd <command_name> <state>
     
@@ -54,4 +54,5 @@ Future
 - [x] catching CommandNotFound error
 - [x] expand README with better instructions and explanations
 - [ ] creating a Discord bot that is connected to the Twitch bot
-- [ ] working on a better way of tracking the watched time of users
+- [x] working on a better way of tracking the watched time of users
+- [ ] creating a command list that is constantly updated
