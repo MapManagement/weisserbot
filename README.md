@@ -34,10 +34,13 @@ More commands
     
     Sends the number of users who subscribed to the streamer
     !subcount
+       
+    Sends the elapsed time since the stream started
+    !uptime
     
  CommandNotFound Error
 -------
-Since most of the commands which are created by users in the Twitch chat are not handled by my command_handler,
+Since most of the commands which are created by users in the Twitch chat are handled by my command_handler,
 I decided to edit the event_command_error function in bot.py of TwitchIO so nothing will be printed to the
 terminal when any message starts with a command prefix and a "CommandNotFound" Error was thrown.
 
