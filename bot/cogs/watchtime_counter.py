@@ -1,5 +1,5 @@
 from twitchio.ext import commands
-from bot.utils import secrets
+from bot.utils import secrets, checks
 import sqlalchemy
 import asyncio
 import requests
@@ -46,6 +46,25 @@ class WatchTime:
         else:
             await ctx.send(f"/me Sorry, couldn't find any data for {str(user_name)}! | @{ctx.message.author.name}")
 
+    @commands.command(name="add_wt")
+    async def add_watchtime(self, ctx, old_name: str, new_name: str):
+        if await checks.is_moehre(ctx):
+            existence_check_old = cursor().execute("SELECT EXISTS (SELECT name FROM users WHERE name = %(old_name)s)",
+                                                   {"old_name": old_name}).fetchone()
+            existence_check_new = cursor().execute("SELECT EXISTS (SELECT name FROM users WHERE name = %(new_name)s)",
+                                                   {"new_name": new_name}).fetchone()
+
+            if existence_check_old[0] and existence_check_new[0]:
+                user_watchtime_old = cursor().execute(f"SELECT minutes FROM users WHERE name = %(user_name)s",
+                                                      {"user_name": old_name}).fetchone()[0]
+                cursor().execute(
+                    f"UPDATE users SET minutes = minutes + %(old_watchtime)s WHERE name = %(new_name)s",
+                    {"old_watchtime": user_watchtime_old, "new_name": new_name})
+
+                await ctx.send(f"Added {round(user_watchtime_old / 60, 2)} minutes to {new_name}!")
+            else:
+                await ctx.send(f"Sorry, couldn't find one or more of the specified users!")
+
     async def watchtime_tracker(self):
         url = f"https://api.twitch.tv/kraken/streams/87252610"
         headers = {'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': secrets.twitch_api_key}
@@ -78,8 +97,9 @@ class WatchTime:
                     (f"SELECT EXISTS (SELECT name FROM users WHERE name = %(chatter_name)s)",
                      {"chatter_name": user}).fetchone()
                 if existence_check[0]:
-                    cursor().execute(f"UPDATE users SET minutes = minutes + %(new_watchtime)s WHERE name = %(chatter_name)s",
-                                     {"new_watchtime": time, "chatter_name": user})
+                    cursor().execute(
+                        f"UPDATE users SET minutes = minutes + %(new_watchtime)s WHERE name = %(chatter_name)s",
+                        {"new_watchtime": time, "chatter_name": user})
                 else:
                     cursor().execute(f"INSERT INTO users (name, minutes) VALUES (%(chatter_name)s, %(new_watchtime)s)",
                                      {"new_watchtime": time, "chatter_name": user})

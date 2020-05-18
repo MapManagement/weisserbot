@@ -32,6 +32,9 @@ More commands
     Sends the time the author watched the stream
     !watchtime
     
+    Adds the watchtime of your old nickname to your newer one (only the streamer is able to do that)
+    !add_wt <old_name> <new_name>
+    
     Sends the number of users who subscribed to the streamer
     !subcount
        
