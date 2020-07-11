@@ -21,12 +21,18 @@ class CommandHandler:
 
     async def event_message(self, message):
         if message.content.startswith("!"):
-            author = message.author.name
-            command_name = message.content[1:len(message.content)]
+            try:
+                message_parts = message.content.split()
+                command_name = message_parts[0][1:len(message.content)]
+                receiver = message_parts[1][1:len(message_parts[1])]
+            except IndexError:
+                command_name = message.content[1:len(message.content)]
+                receiver = message.author.name
+
             if not self.is_command_disabled(command_name):
                 command_content = self.get_command_content(command_name)
                 if command_content is not None:
-                    await message.channel.send(self.command_response(command_content[0], author))
+                    await message.channel.send(self.command_response(command_content[0], receiver))
 
     def get_command_content(self, name: str):
         result = cursor().execute("SELECT content FROM commands WHERE name = %(command_name)s",
