@@ -24,7 +24,11 @@ class CommandHandler:
             try:
                 message_parts = message.content.split()
                 command_name = message_parts[0][1:len(message.content)]
-                receiver = message_parts[1][1:len(message_parts[1])]
+                receiver_mentioned = message_parts[1]
+                if receiver_mentioned[0] is "@":
+                    receiver = receiver_mentioned[1:len(message_parts[1])]
+                else:
+                    receiver = message.author.name
             except IndexError:
                 command_name = message.content[1:len(message.content)]
                 receiver = message.author.name
