@@ -20,8 +20,7 @@ class Bot(commands.Bot):
         print(f"Logging in as {self.nick}. Joining {self.initial_channels[0]}'s chat.\n"
               "Ready to work!\n"
               "----------------")
-        await asyncio.gather(self.twitter_cycler(), self.insta_cycler(),
-                             watchtime_counter.WatchTime(Bot).watchtime_tracker(),
+        await asyncio.gather(self.twitter_cycler(), watchtime_counter.WatchTime(Bot).watchtime_tracker(),
                              watchtime_counter.WatchTime(Bot).temp_watchtime_to_db())
 
     async def event_message(self, message):
@@ -36,14 +35,9 @@ class Bot(commands.Bot):
     async def twitter_cycler(self):
         channel = Bot.get_channel(self, "WeisseMoehre")
         while True:
-            await asyncio.sleep(1200)
+            await asyncio.sleep(600)
             await channel.send("/me Twitter: https://twitter.com/WeisseMoehre")
-
-    async def insta_cycler(self):
-        channel = Bot.get_channel(self, "WeisseMoehre")
-        await asyncio.sleep(600)
-        while True:
-            await asyncio.sleep(1200)
+            await asyncio.sleep(600)
             await channel.send("/me Instagram: https://www.instagram.com/weissemoehre/?hl=de")
 
     def load_cogs(self):
