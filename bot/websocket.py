@@ -2,7 +2,7 @@ import websockets
 import json
 import asyncio
 import uuid
-from bot.utils import secrets
+from utils import secrets
 
 
 class WebSocket():
@@ -37,3 +37,12 @@ class WebSocket():
         nonce = uuid.uuid1()
         nonce_oauth = nonce.hex
         return nonce_oauth
+
+
+if __name__ == "__main__":
+    websocket = WebSocket()
+    loop = asyncio.get_event_loop()
+    connection = loop.run_until_complete(websocket.connect())
+
+    task = [asyncio.ensure_future(websocket.receive_message(connection=connection))]
+    loop.run_until_complete(asyncio.wait(task))
