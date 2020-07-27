@@ -2,7 +2,7 @@ import websockets
 import json
 import asyncio
 import uuid
-from utils import secrets
+from bot.utils import secrets
 
 
 class WebSocket():
@@ -17,7 +17,7 @@ class WebSocket():
                        "data":
                            {"topics": self.topics, "auth_token": secrets.websocket_token}}
 
-            json_message = json.dumps(message)
+            json_message = json.dumps(message, indent=4)
             await self.send_message(json_message)
             return self.connection
 
