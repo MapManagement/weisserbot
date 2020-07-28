@@ -17,7 +17,7 @@ class WebSocket():
                        "data":
                            {"topics": self.topics, "auth_token": secrets.websocket_token}}
 
-            json_message = json.dumps(message, indent=4)
+            json_message = json.dumps(message)
             await self.send_message(json_message)
             return self.connection
 
@@ -25,8 +25,7 @@ class WebSocket():
         while True:
             try:
                 message = await connection.recv()
-
-                print(f"Received: {message}")
+                self.check_reward(message)
             except websockets.exceptions.ConnectionClosed:
                 break
 
@@ -37,6 +36,16 @@ class WebSocket():
         nonce = uuid.uuid1()
         nonce_oauth = nonce.hex
         return nonce_oauth
+
+    def check_reward(self, reward):
+        json_reward = json.loads(reward)
+        print(json_reward)
+
+        if json_reward['type'] == "MESSAGE":
+            message_data = json_reward['data']['message']
+            json_message = json.loads(message_data)
+            reward_name = json_message['data']['redemption']['reward']['title']
+            print(reward_name)
 
 
 if __name__ == "__main__":
