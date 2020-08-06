@@ -37,7 +37,7 @@ class WebSocket():
         nonce_oauth = nonce.hex
         return nonce_oauth
 
-    def check_reward(self, reward):
+    def check_reward(self, reward: str):
         json_reward = json.loads(reward)
         print(json_reward)
 
@@ -45,7 +45,17 @@ class WebSocket():
             message_data = json_reward['data']['message']
             json_message = json.loads(message_data)
             reward_name = json_message['data']['redemption']['reward']['title']
-            print(reward_name)
+            self.send_signal(reward_name)
+
+    def send_signal(self, reward_name: str):
+        rewards = [""]
+        if reward_name in rewards:
+            if reward_name == "":
+                pass
+            elif reward_name == "":
+                pass
+            elif reward_name == "":
+                pass
 
 
 if __name__ == "__main__":
